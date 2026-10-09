@@ -1,0 +1,31 @@
+{
+  "buffer_gib": 8,
+  "threads": 14,
+  "seconds": 8,
+  "cpu_khz": 2601000,
+  "emc_hz": 4266000000,
+  "peak_gbs": 273.024,
+  "patterns": {
+    "read": {
+      "timed_gbs": 235.08,
+      "huge_page_mib": 16384,
+      "perf_rd_gbs": 235.40614401116719,
+      "perf_wr_gbs": 0.0855372677373388,
+      "perf_gbs": 235.49168127890454
+    },
+    "write": {
+      "timed_gbs": 259.4,
+      "huge_page_mib": 16384,
+      "perf_rd_gbs": 0.22278815910187075,
+      "perf_wr_gbs": 259.26268657512065,
+      "perf_gbs": 259.4854747342225
+    },
+    "copy": {
+      "timed_gbs": 237.48,
+      "huge_page_mib": 16384,
+      "perf_rd_gbs": 119.073329599564,
+      "perf_wr_gbs": 118.68527250781473,
+      "perf_gbs": 237.75860210737875
+    }
+  }
+}
