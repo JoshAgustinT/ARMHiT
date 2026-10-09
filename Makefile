@@ -46,11 +46,11 @@ ifeq ($(UNIFORM_PROBING),ON)
   DEFS += -DUNIFORM_HT_SUPPORT
 endif
 
-CXXFLAGS := -std=c++20 -O3 -g -Wall -mcpu=native $(sort $(DEFS))
+CXXFLAGS := -std=c++20 -O3 -g -Wall -mcpu=native -Isrc $(sort $(DEFS))
 LDFLAGS  := -pthread
 
-SRCS := src/main.cpp src/args.cpp src/uniform_test.cpp
-HDRS := src/dramhit.hpp src/cas_ht.hpp
+SRCS := src/main.cpp src/args.cpp src/tests/uniform_test.cpp
+HDRS := src/dramhit.hpp src/hashtables/cas_ht.hpp
 BIN  := $(BUILD_DIR)/dramhit
 FLAGS_STAMP := $(BUILD_DIR)/.flags
 

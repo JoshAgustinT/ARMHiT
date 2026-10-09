@@ -35,6 +35,8 @@ struct Configuration {
   bool drop_caches = true;
   // Check fill and found counts at the end.
   bool test = false;
+  // Keys 1..N in consecutive cache lines instead of hashed (see run_uniform_test).
+  bool sequential = false;
 };
 
 extern Configuration config;

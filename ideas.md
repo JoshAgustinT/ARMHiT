@@ -158,3 +158,11 @@ costs above. Measure it rather than assume it.
 - Novelty versus the GPU-CC/LLM papers: they already cover the "batching
   helps" story for LLMs. Our angle has to be the latency-bound, Gops-scale
   data structure regime plus the boundary/ring design, not LLM serving.
+
+
+
+## Idea: TEE under high throughput (AMD SEV-SNP)
+- Motivation: TEEs are usually evaluated on toy apps; we want to see what happens to a large, high-throughput, DRAM-latency-bound workload (DRAMHiT) inside one.
+- Thor's OP-TEE (/dev/tee0) is a poor fit: TAs are typically single-threaded with a small secure carve-out, and plain TrustZone may not encrypt DRAM (unverified). ARM CCA/Realms is likely not enabled in Jetson firmware.
+- Plan: use the AMD r6615 box (EPYC, if it supports SEV-SNP). Run DRAMHiT in a normal VM vs an SEV-SNP VM at the same thread count; same prefetch sweep (collect_data_amd.py), compare Mops vs fill.
+- Questions: cost of memory encryption/integrity on miss latency; does it shift which prefetch flavour wins; does software prefetching hide the extra latency; any change in effective MLP.

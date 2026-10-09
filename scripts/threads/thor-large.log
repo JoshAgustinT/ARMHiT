@@ -1,0 +1,119 @@
+Running: make -s -C /home/thor/Desktop/josh/ARMHiT BUILD_DIR=/home/thor/Desktop/josh/ARMHiT/build PREFETCH=DOUBLE BUCKETIZATION=ON BRANCH=simd UNIFORM_PROBING=ON CPUFREQ_MHZ=2600
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 1 --read-factor 1 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 14 --read-factor 26 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  1 thr: set 117 Mops 16.5 GB/s, get 117 Mops 7.7 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 2 --ht-size 536870912 --ht-fill 10 --insert-factor 53 --read-factor 53 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  2 thr: set 246 Mops 32.5 GB/s, get 235 Mops 15.7 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 3 --ht-size 536870912 --ht-fill 10 --insert-factor 83 --read-factor 79 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  3 thr: set 360 Mops 47.2 GB/s, get 334 Mops 22.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 4 --ht-size 536870912 --ht-fill 10 --insert-factor 108 --read-factor 100 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  4 thr: set 459 Mops 59.9 GB/s, get 458 Mops 30.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 5 --ht-size 536870912 --ht-fill 10 --insert-factor 129 --read-factor 128 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  5 thr: set 549 Mops 71.4 GB/s, get 541 Mops 37.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 6 --ht-size 536870912 --ht-fill 10 --insert-factor 148 --read-factor 146 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  6 thr: set 631 Mops 81.9 GB/s, get 684 Mops 45.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 7 --ht-size 536870912 --ht-fill 10 --insert-factor 165 --read-factor 179 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  7 thr: set 705 Mops 91.2 GB/s, get 732 Mops 50.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 8 --ht-size 536870912 --ht-fill 10 --insert-factor 181 --read-factor 188 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  8 thr: set 777 Mops 100.4 GB/s, get 873 Mops 57.9 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 9 --ht-size 536870912 --ht-fill 10 --insert-factor 196 --read-factor 220 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform  9 thr: set 844 Mops 109.1 GB/s, get 1003 Mops 66.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 10 --ht-size 536870912 --ht-fill 10 --insert-factor 210 --read-factor 250 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform 10 thr: set 902 Mops 116.5 GB/s, get 973 Mops 70.1 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 11 --ht-size 536870912 --ht-fill 10 --insert-factor 222 --read-factor 240 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform 11 thr: set 943 Mops 122.0 GB/s, get 1014 Mops 74.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 12 --ht-size 536870912 --ht-fill 10 --insert-factor 230 --read-factor 248 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform 12 thr: set 975 Mops 126.1 GB/s, get 1159 Mops 83.1 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 13 --ht-size 536870912 --ht-fill 10 --insert-factor 237 --read-factor 281 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform 13 thr: set 994 Mops 128.8 GB/s, get 1186 Mops 89.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 14 --ht-size 536870912 --ht-fill 10 --insert-factor 240 --read-factor 286 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+  DOUBLE    uniform 14 thr: set 929 Mops 130.2 GB/s, get 1109 Mops 90.9 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 1 --read-factor 1 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 17 --read-factor 50 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  1 thr: set 183 Mops 26.1 GB/s, get 223 Mops 14.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 2 --ht-size 536870912 --ht-fill 10 --insert-factor 82 --read-factor 100 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  2 thr: set 384 Mops 50.5 GB/s, get 446 Mops 28.7 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 3 --ht-size 536870912 --ht-fill 10 --insert-factor 129 --read-factor 150 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  3 thr: set 552 Mops 72.1 GB/s, get 668 Mops 43.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 4 --ht-size 536870912 --ht-fill 10 --insert-factor 165 --read-factor 199 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  4 thr: set 698 Mops 90.9 GB/s, get 889 Mops 57.3 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 5 --ht-size 536870912 --ht-fill 10 --insert-factor 196 --read-factor 249 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  5 thr: set 833 Mops 108.2 GB/s, get 1115 Mops 71.9 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 6 --ht-size 536870912 --ht-fill 10 --insert-factor 224 --read-factor 299 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  6 thr: set 956 Mops 123.9 GB/s, get 1337 Mops 86.3 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 7 --ht-size 536870912 --ht-fill 10 --insert-factor 250 --read-factor 349 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  7 thr: set 1073 Mops 138.9 GB/s, get 1560 Mops 100.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 8 --ht-size 536870912 --ht-fill 10 --insert-factor 275 --read-factor 399 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  8 thr: set 1188 Mops 154.0 GB/s, get 1781 Mops 114.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 9 --ht-size 536870912 --ht-fill 10 --insert-factor 299 --read-factor 448 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential  9 thr: set 1288 Mops 166.4 GB/s, get 2005 Mops 128.7 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 10 --ht-size 536870912 --ht-fill 10 --insert-factor 320 --read-factor 498 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential 10 thr: set 1369 Mops 177.2 GB/s, get 2223 Mops 142.9 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 11 --ht-size 536870912 --ht-fill 10 --insert-factor 337 --read-factor 547 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential 11 thr: set 1401 Mops 181.5 GB/s, get 2435 Mops 157.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 12 --ht-size 536870912 --ht-fill 10 --insert-factor 342 --read-factor 594 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential 12 thr: set 1370 Mops 176.5 GB/s, get 2655 Mops 171.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 13 --ht-size 536870912 --ht-fill 10 --insert-factor 332 --read-factor 643 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential 13 thr: set 1360 Mops 175.1 GB/s, get 2872 Mops 185.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 14 --ht-size 536870912 --ht-fill 10 --insert-factor 328 --read-factor 692 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+  DOUBLE sequential 14 thr: set 1241 Mops 174.2 GB/s, get 2523 Mops 195.4 GB/s
+Running: make -s -C /home/thor/Desktop/josh/ARMHiT BUILD_DIR=/home/thor/Desktop/josh/ARMHiT/build PREFETCH=L1 BUCKETIZATION=ON BRANCH=simd UNIFORM_PROBING=ON CPUFREQ_MHZ=2600
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 1 --read-factor 1 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 14 --read-factor 14 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  1 thr: set 53 Mops 7.3 GB/s, get 61 Mops 4.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 2 --ht-size 536870912 --ht-fill 10 --insert-factor 24 --read-factor 28 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  2 thr: set 106 Mops 14.5 GB/s, get 121 Mops 9.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 3 --ht-size 536870912 --ht-fill 10 --insert-factor 36 --read-factor 41 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  3 thr: set 157 Mops 21.6 GB/s, get 181 Mops 13.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 4 --ht-size 536870912 --ht-fill 10 --insert-factor 47 --read-factor 54 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  4 thr: set 206 Mops 28.4 GB/s, get 240 Mops 17.8 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 5 --ht-size 536870912 --ht-fill 10 --insert-factor 58 --read-factor 67 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  5 thr: set 253 Mops 34.8 GB/s, get 298 Mops 22.1 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 6 --ht-size 536870912 --ht-fill 10 --insert-factor 68 --read-factor 80 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  6 thr: set 298 Mops 40.8 GB/s, get 356 Mops 26.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 7 --ht-size 536870912 --ht-fill 10 --insert-factor 78 --read-factor 93 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  7 thr: set 340 Mops 46.5 GB/s, get 414 Mops 30.3 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 8 --ht-size 536870912 --ht-fill 10 --insert-factor 87 --read-factor 106 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  8 thr: set 379 Mops 51.9 GB/s, get 470 Mops 34.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 9 --ht-size 536870912 --ht-fill 10 --insert-factor 96 --read-factor 119 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform  9 thr: set 416 Mops 57.1 GB/s, get 527 Mops 38.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 10 --ht-size 536870912 --ht-fill 10 --insert-factor 104 --read-factor 131 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform 10 thr: set 451 Mops 61.9 GB/s, get 583 Mops 42.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 11 --ht-size 536870912 --ht-fill 10 --insert-factor 111 --read-factor 144 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform 11 thr: set 485 Mops 66.5 GB/s, get 639 Mops 46.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 12 --ht-size 536870912 --ht-fill 10 --insert-factor 119 --read-factor 156 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform 12 thr: set 516 Mops 70.8 GB/s, get 694 Mops 50.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 13 --ht-size 536870912 --ht-fill 10 --insert-factor 125 --read-factor 169 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform 13 thr: set 544 Mops 75.0 GB/s, get 748 Mops 54.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 14 --ht-size 536870912 --ht-fill 10 --insert-factor 131 --read-factor 180 --batch-len 16 --find_queue 64 --test 0 --sequential 0
+      L1    uniform 14 thr: set 483 Mops 77.8 GB/s, get 645 Mops 57.3 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 1 --read-factor 1 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 1 --ht-size 536870912 --ht-fill 10 --insert-factor 17 --read-factor 46 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  1 thr: set 207 Mops 30.0 GB/s, get 204 Mops 13.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 2 --ht-size 536870912 --ht-fill 10 --insert-factor 93 --read-factor 92 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  2 thr: set 456 Mops 60.0 GB/s, get 405 Mops 26.1 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 3 --ht-size 536870912 --ht-fill 10 --insert-factor 153 --read-factor 136 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  3 thr: set 691 Mops 90.1 GB/s, get 602 Mops 38.7 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 4 --ht-size 536870912 --ht-fill 10 --insert-factor 206 --read-factor 180 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  4 thr: set 922 Mops 119.9 GB/s, get 796 Mops 51.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 5 --ht-size 536870912 --ht-fill 10 --insert-factor 258 --read-factor 223 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  5 thr: set 1153 Mops 149.7 GB/s, get 980 Mops 63.2 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 6 --ht-size 536870912 --ht-fill 10 --insert-factor 310 --read-factor 263 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  6 thr: set 1373 Mops 178.1 GB/s, get 1136 Mops 74.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 7 --ht-size 536870912 --ht-fill 10 --insert-factor 358 --read-factor 297 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  7 thr: set 1558 Mops 202.0 GB/s, get 1336 Mops 86.4 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 8 --ht-size 536870912 --ht-fill 10 --insert-factor 399 --read-factor 342 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  8 thr: set 1674 Mops 216.7 GB/s, get 1494 Mops 97.3 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 9 --ht-size 536870912 --ht-fill 10 --insert-factor 422 --read-factor 376 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential  9 thr: set 1745 Mops 225.4 GB/s, get 1641 Mops 108.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 10 --ht-size 536870912 --ht-fill 10 --insert-factor 434 --read-factor 408 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential 10 thr: set 1798 Mops 231.9 GB/s, get 1826 Mops 119.0 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 11 --ht-size 536870912 --ht-fill 10 --insert-factor 442 --read-factor 449 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential 11 thr: set 1821 Mops 235.9 GB/s, get 1995 Mops 130.1 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 12 --ht-size 536870912 --ht-fill 10 --insert-factor 445 --read-factor 487 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential 12 thr: set 1839 Mops 237.1 GB/s, get 2133 Mops 140.5 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 13 --ht-size 536870912 --ht-fill 10 --insert-factor 446 --read-factor 517 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential 13 thr: set 1825 Mops 236.0 GB/s, get 2292 Mops 150.6 GB/s
+Running: /home/thor/Desktop/josh/ARMHiT/build/dramhit --mode 11 --ht-type 3 --num-threads 14 --ht-size 536870912 --ht-fill 10 --insert-factor 440 --read-factor 552 --batch-len 16 --find_queue 64 --test 0 --sequential 1
+      L1 sequential 14 thr: set 1632 Mops 235.8 GB/s, get 2060 Mops 158.7 GB/s
+[OK] Saved /home/thor/Desktop/josh/ARMHiT/scripts/threads/thor-large.json

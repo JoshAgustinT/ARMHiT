@@ -51,7 +51,10 @@ build/dramhit --mode 11 --ht-type 3 --num-threads 14 --ht-size 536870912 --ht-fi
 ```
 
 `--test 1` checks that fill equals the number of keys and that found equals
-keys × read-factor. `--numa-split`, `--skew`, `--seed`, `--hw-pref`,
+keys × read-factor. `--sequential 1` replaces the hash: key `i + 1` goes to
+cache line `i` (one key per 4-slot line), counted from the line the first
+hashed key would land in, so each thread walks consecutive lines; it needs
+`--ht-fill <= 25`. `--numa-split`, `--skew`, `--seed`, `--hw-pref`,
 `--no-prefetch` and `--drop-caches` are accepted but ignored. Statistics go to
 stdout in DRAMHiT's format (`set_mops : X, get_mops : Y`) and logs go to stderr.
 
@@ -61,22 +64,61 @@ That gives unique, non-zero keys without RNG, zipf or key arrays. Each thread
 first-touches its own slice of the table (THP via madvise, or hugetlb if pages
 are reserved) and is pinned to cpu `t`.
 
-## Prefetch sweep
+## Experiments
+
+Each experiment is a folder under `scripts/` with its own collector, plotter
+and results (json + png next to the scripts). `scripts/common.py` holds the
+build/run/perf code they share.
+
+| folder | sweep | series |
+|---|---|---|
+| `scripts/threads/` | 1 .. all cores, 10% fill, `small`/`medium`/`large` table (8 MiB / 256 MiB / 8 GiB), hashed and `--sequential` keys | DOUBLE, L1 |
+| `scripts/prefetches/` | fill 10..90%, all cores, 8 GiB | every prefetch flavour |
 
 ```sh
-python3 scripts/collect_data.py   # -> results/thor.json; edit build_cfgs/run_cfgs to change the sweep
-python3 scripts/plot_data.py results/thor.json results/thor.svg   # stdlib only
+python3 scripts/threads/collect_data.py large --reps 3     # -> scripts/threads/thor-large.json
+.venv/bin/python scripts/threads/plot_data.py scripts/threads/thor-large.json   # -> .png
+.venv/bin/python scripts/threads/plot_finds.py scripts/threads/thor-large.json  # lookups only -> _finds.png
 ```
 
-`collect_data.py` builds each variant with make and saves the JSON after
-every run.
+Both record Mops and DRAM bandwidth (GB/s) for the insert and find phases,
+the median over `--reps` runs plus every run (the plots shade min..max).
+Iteration counts are sized so every phase runs for ~12 s (a dozen 1 s perf
+samples); passes after the first insert pass update existing keys,
+as in DRAMHiT.
+
+### Bandwidth
+
+perf stat samples `nvidia_ucf_pmu_0/local_dram_byte_{rd,wr}/` every 1 s,
+system wide, with the perf at `/usr/lib/linux-tools/6.8.0-146-generic/perf`
+(the tegra kernel has no matching distro linux-tools). The collector starts
+perf with counting off (`-D -1 --control fifo:...`) and passes the fifos to
+dramhit in `ARMHIT_PERF_CTL` / `ARMHIT_PERF_ACK`; dramhit turns counting on
+only while a phase runs. So setup is never counted, the samples split into an
+insert run and a find run, and each phase's GB/s is the median of its samples
+(each divided by the time it actually counted). Needs
+`kernel.perf_event_paranoid` <= 0 for the uncore PMU without sudo.
+
+### Plotting
+
+The plotters use `styling/paper_style.py`, a copy of DRAMHiT's
+`scripts/eurosys_2026/paper_style.py` with the prefetch flavours as the
+palette; read `styling/PLOTTING.md` before writing a new one. They need
+seaborn, which the system python lacks:
+
+```sh
+uv venv --system-site-packages .venv && uv pip install --python .venv/bin/python seaborn
+```
 
 ## Layout
 
 ```
-src/dramhit.hpp       config, operation types, logging
-src/cas_ht.hpp        the hashtable (cas_kht.hpp trimmed to insert_batch/find_batch)
-src/uniform_test.cpp  the test: threads, workload, timing, stats
-src/args.cpp          DRAMHiT-compatible argument parsing
-src/main.cpp          validation + entry
+src/dramhit.hpp               config, operation types, logging
+src/hashtables/cas_ht.hpp     the hashtable (cas_kht.hpp trimmed to insert_batch/find_batch)
+src/tests/uniform_test.cpp    the test: threads, workload, timing, stats, perf control
+src/args.cpp                  DRAMHiT-compatible argument parsing
+src/main.cpp                  validation + entry
+scripts/common.py             build / run / perf parsing shared by the experiments
+scripts/<experiment>/         collect_data.py, plot_data.py, results
+styling/                      paper_style.py + PLOTTING.md
 ```

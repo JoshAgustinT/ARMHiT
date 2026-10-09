@@ -51,6 +51,11 @@ static void validate() {
   // > 8 so the DOUBLE look-ahead prefetch stays inside the queue.
   CHECK(q >= 16 && (q & (q - 1)) == 0, "--find_queue_sz must be a power of 2 >= 16, got %u", q);
   CHECK(config.batch_len > 0, "--batch-len must be > 0");
+  // One key per 4-slot cache line, so the keys need 4x their count in slots.
+  CHECK(!config.sequential || config.ht_fill <= 25,
+        "--sequential needs --ht-fill <= 25 (one key per cache line), got %u", config.ht_fill);
+  CHECK(config.insert_factor > 0 && config.read_factor > 0,
+        "--insert-factor and --read-factor must be > 0");
 }
 
 int main(int argc, char **argv) {
@@ -59,8 +64,9 @@ int main(int argc, char **argv) {
   PLOGI("Hashtable type : Cas HT, prefetch %s, cpufreq %d MHz", prefetch_name(),
         CPUFREQ_MHZ);
   PLOGI("threads %u, ht_size %lu, fill %u%%, insert_factor %lu, read_factor %lu, "
-        "batch %u, queue %u",
+        "batch %u, queue %u%s",
         config.num_threads, config.ht_size, config.ht_fill, config.insert_factor,
-        config.read_factor, config.batch_len, config.find_queue_sz);
+        config.read_factor, config.batch_len, config.find_queue_sz,
+        config.sequential ? ", sequential" : "");
   return run_uniform_test();
 }

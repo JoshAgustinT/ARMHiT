@@ -37,6 +37,7 @@ static const Option options[] = {
     {"no-prefetch", BOOL, &config.no_prefetch, "(ignored)"},
     {"drop-caches", BOOL, &config.drop_caches, "(ignored)"},
     {"test", BOOL, &config.test, "check fill and found counts"},
+    {"sequential", BOOL, &config.sequential, "key i in cache line i (no hash)"},
 };
 
 [[noreturn]] static void die(const std::string &msg) {

@@ -129,6 +129,10 @@ class CASHashTable {
   /// The global instance is shared by all threads.
   static inline KV *hashtable = nullptr;
 
+  /// Sequential mode (--sequential): hash(key) = seq_start + (key - 1) * 4.
+  static inline bool sequential = false;
+  static inline uint64_t seq_start = 0;
+
   const static uint64_t CACHELINE_SIZE = 64;
   const static uint64_t KV_IN_CACHELINE = CACHELINE_SIZE / sizeof(KV);
   const static uint64_t KEYS_IN_CACHELINE_MASK =
@@ -288,9 +292,13 @@ class CASHashTable {
   uint32_t ins_head;
   uint32_t ins_tail;
 
-  // HASHER=crc: CRC32C of the 8-byte key.
+  // HASHER=crc: CRC32C of the 8-byte key. In sequential mode, key k goes to
+  // the bucket k - 1 buckets after seq_start, so consecutive keys fill
+  // consecutive cache lines, one key per line.
   uint64_t hash(const void *k) {
-    return __crc32cd(0xffffffff, *(const uint64_t *)k);
+    uint64_t key = *(const uint64_t *)k;
+    if (sequential) return seq_start + (key - 1) * KV_IN_CACHELINE;
+    return __crc32cd(0xffffffff, key);
   }
 
   static uint64_t next_pow2(uint64_t v) {
