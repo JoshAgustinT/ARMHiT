@@ -66,51 +66,33 @@ That gives unique, non-zero keys without RNG, zipf or key arrays. Each thread
 first-touches its own slice of the table (THP via madvise, or hugetlb if pages
 are reserved) and is pinned to cpu `t`.
 
-## Experiments
-
-Each experiment is a folder under `scripts/` with its own collector, plotter
-and results (json + png next to the scripts). Each folder is self-contained:
-its collector has its own build, run, perf and clock-check code.
-
-| folder | sweep | series |
-|---|---|---|
-| `scripts/threads/` | 1 .. all cores, 10% fill, ~60 s phases, 1 run per point, full log in `thor-<size>.log`, `small`/`medium`/`large` table (8 MiB / 256 MiB / 8 GiB), hashed and `--sequential` keys | DOUBLE, L1 |
-| `scripts/prefetches/` | fill 10..90%, 14 threads, 8 GiB, ~60 s phases, 1 run per point, full log in `thor.log` | every prefetch scheme |
+## Setup
 
 ```sh
-python3 scripts/threads/collect_data.py large             # -> scripts/threads/thor-large.json
-.venv/bin/python scripts/threads/plot_data.py scripts/threads/thor-large.json   # -> .png
-.venv/bin/python scripts/threads/plot_finds.py scripts/threads/thor-large.json  # lookups only -> _finds.png
-python3 scripts/prefetches/collect_data.py               # -> scripts/prefetches/thor.json
-.venv/bin/python scripts/prefetches/plot_data.py scripts/prefetches/thor.json   # -> .png
+sudo sysctl kernel.perf_event_paranoid=-1   # uncore PMUs without sudo
+sudo ./pin_ghz.sh on                        # pin CPU, memory (EMC) and GPU clocks; `off` restores
 ```
 
-Both record Mops and DRAM bandwidth (GB/s) for the insert and find phases.
-Iteration counts are sized so every phase runs for ~10-12 s, i.e. ~10 one
-second perf samples, which beats repeating short runs; passes after the first
-insert pass update existing keys, as in DRAMHiT. threads keeps the median
-over `--reps` runs (default 1); prefetches runs each point once, GB/s being
-the median of the phase's 1 s samples (no band: the first and last samples
-are partly warm-up / tail).
+Collectors abort unless the clocks are pinned. Use the perf at
+`/usr/lib/linux-tools/6.8.0-146-generic/perf` (the tegra kernel has no matching
+distro linux-tools). DRAM bandwidth comes from
+`nvidia_ucf_pmu_0/local_dram_byte_{rd,wr}/`, counted system wide at the memory
+side. dramhit can gate perf itself: given perf's `--control` fifos in
+`ARMHIT_PERF_CTL` / `ARMHIT_PERF_ACK`, it enables counting only while a phase
+runs.
 
-### Bandwidth
+## Experiments
 
-perf stat samples `nvidia_ucf_pmu_0/local_dram_byte_{rd,wr}/` every 1 s,
-system wide, with the perf at `/usr/lib/linux-tools/6.8.0-146-generic/perf`
-(the tegra kernel has no matching distro linux-tools). The collector starts
-perf with counting off (`-D -1 --control fifo:...`) and passes the fifos to
-dramhit in `ARMHIT_PERF_CTL` / `ARMHIT_PERF_ACK`; dramhit turns counting on
-only while a phase runs. So setup is never counted, the samples split into an
-insert run and a find run, and each phase's GB/s is the median of its samples
-(each divided by the time it actually counted). Needs
-`kernel.perf_event_paranoid` <= 0 for the uncore PMU without sudo.
+Each experiment is a folder under `scripts/` with its own collector
+(`collect_*.py`), plotter (`plot_*.py`), results (json / png / log next to the
+scripts) and a `progress.md` describing what it measures, how, and what it
+found. Folders are self-contained: no shared helper code.
 
 ### Plotting
 
-The plotters use `styling/paper_style.py`, a copy of DRAMHiT's
-`scripts/eurosys_2026/paper_style.py` with the prefetch flavours as the
-palette; read `styling/PLOTTING.md` before writing a new one. They need
-seaborn, which the system python lacks:
+The plotters use `styling/paper_style.py` (adapted from DRAMHiT's
+`scripts/eurosys_2026/paper_style.py`); read `styling/PLOTTING.md` before
+writing a new one. They need seaborn, which the system python lacks:
 
 ```sh
 uv venv --system-site-packages .venv && uv pip install --python .venv/bin/python seaborn
@@ -124,6 +106,10 @@ src/hashtables/cas_ht.hpp     the hashtable (cas_kht.hpp trimmed to insert_batch
 src/tests/uniform_test.cpp    the test: threads, workload, timing, stats, perf control
 src/args.cpp                  DRAMHiT-compatible argument parsing
 src/main.cpp                  validation + entry
-scripts/<experiment>/         collect_data.py, plot_data.py, results
+scripts/<experiment>/         collector, plotter, results, progress.md
 styling/                      paper_style.py + PLOTTING.md
+pin_ghz.sh                    pin / restore clocks
+progress.md                   project-wide notes
+ideas.md                      research directions (TEEs on the Thor)
+perf_list.txt                 `perf list` on the Thor (PMU events, incl. UCF)
 ```

@@ -2,32 +2,32 @@
   "cpu_threads": 14,
   "cpu_buffer_gib": 8,
   "gpu_buffer_mib": 1024,
-  "seconds": 8,
+  "seconds": 30,
   "cpu_khz": 2601000,
   "emc_hz": 4266000000,
   "gpu_hz": 1386000000,
   "peak_gbs": 273.024,
   "patterns": {
     "read": {
-      "cpu_gbs": 105.82,
-      "gpu_gbs": 133.04,
-      "perf_rd_gbs": 239.05893137395054,
-      "perf_wr_gbs": 0.10109182152271266,
-      "perf_gbs": 239.16002319547326
+      "cpu_gbs": 105.19,
+      "gpu_gbs": 134.09,
+      "perf_rd_gbs": 239.56443398404713,
+      "perf_wr_gbs": 0.1151736446273216,
+      "perf_gbs": 239.67960762867446
     },
     "write": {
-      "cpu_gbs": 212.39,
-      "gpu_gbs": 39.73,
-      "perf_rd_gbs": 0.29272180826155575,
-      "perf_wr_gbs": 251.66455147983078,
-      "perf_gbs": 251.95727328809232
+      "cpu_gbs": 211.85,
+      "gpu_gbs": 40.07,
+      "perf_rd_gbs": 0.24968737645542619,
+      "perf_wr_gbs": 251.70188978354722,
+      "perf_gbs": 251.95157716000264
     },
     "copy": {
-      "cpu_gbs": 137.87,
-      "gpu_gbs": 87.31,
-      "perf_rd_gbs": 112.58047764216552,
-      "perf_wr_gbs": 112.25114043313224,
-      "perf_gbs": 224.83161807529774
+      "cpu_gbs": 138.16,
+      "gpu_gbs": 86.33,
+      "perf_rd_gbs": 112.472073588076,
+      "perf_wr_gbs": 112.24637514497365,
+      "perf_gbs": 224.71844873304966
     }
   }
 }

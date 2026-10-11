@@ -1,6 +1,6 @@
 // mem.cu -- how much DRAM bandwidth can the GPU pull?
 //
-//   ./mem read|write|copy [MiB] [seconds]
+//   ./mem read|write|copy [MiB] [seconds] [blocks threads_per_block]
 //
 // Streams a buffer (default 1 GiB, far bigger than any cache) over and over
 // for ~`seconds`, with every thread slot on the GPU busy, and prints GB/s:
@@ -9,6 +9,9 @@
 //          driver's fill, ~256 GB/s vs ~251 for a grid-stride uint4 store kernel
 //          (it runs on its own path; nsys shows no kernel for it)
 //   copy   src -> dst            (bytes moved = 2 * size)
+// Default grid: every thread slot on every SM. Passing blocks and
+// threads_per_block runs that grid instead (for the thread sweep); write then
+// uses write_kernel, since cudaMemset has no thread count.
 //
 // If MEM_START_AT is set (unix time, seconds), it sets up first and then
 // waits until that moment to measure, so a collector can line it up with
@@ -46,6 +49,11 @@ __global__ void read_kernel(const Element* src, size_t n, unsigned* sink) {
     if (sum == 0xdeadbeef) *sink = sum;
 }
 
+__global__ void write_kernel(Element* dst, size_t n) {
+    for (size_t i = blockIdx.x * blockDim.x + threadIdx.x; i < n; i += gridDim.x * blockDim.x)
+        dst[i] = make_uint4(1, 2, 3, 4);
+}
+
 __global__ void copy_kernel(const Element* src, Element* dst, size_t n) {
     for (size_t i = blockIdx.x * blockDim.x + threadIdx.x; i < n; i += gridDim.x * blockDim.x)
         dst[i] = src[i];
@@ -64,18 +72,21 @@ void wait_for_start() {
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        fprintf(stderr, "usage: %s read|write|copy [MiB] [seconds]\n", argv[0]);
+        fprintf(stderr, "usage: %s read|write|copy [MiB] [seconds] [blocks threads_per_block]\n",
+                argv[0]);
         return 1;
     }
     const char* pattern = argv[1];
     size_t mib = argc > 2 ? atol(argv[2]) : 1024;
     double seconds = argc > 3 ? atof(argv[3]) : 5;
 
-    // Every thread slot on every SM busy, as in hello.cu.
+    // Every thread slot on every SM busy, as in hello.cu, unless a grid is given.
     cudaDeviceProp gpu;
     CHECK(cudaGetDeviceProperties(&gpu, 0));
-    int threads_per_block = 256;
-    int blocks = gpu.multiProcessorCount * gpu.maxThreadsPerMultiProcessor / threads_per_block;
+    bool grid_given = argc > 5;
+    int threads_per_block = grid_given ? atoi(argv[5]) : 256;
+    int blocks = grid_given ? atoi(argv[4])
+                            : gpu.multiProcessorCount * gpu.maxThreadsPerMultiProcessor / threads_per_block;
 
     size_t bytes = mib << 20;
     size_t n = bytes / sizeof(Element);
@@ -95,7 +106,10 @@ int main(int argc, char** argv) {
             return bytes;
         }
         if (!strcmp(pattern, "write")) {
-            CHECK(cudaMemsetAsync(dst, 0x5a, bytes));
+            if (grid_given)
+                write_kernel<<<blocks, threads_per_block>>>(dst, n);
+            else
+                CHECK(cudaMemsetAsync(dst, 0x5a, bytes));
             return bytes;
         }
         copy_kernel<<<blocks, threads_per_block>>>(src, dst, n);
@@ -108,11 +122,14 @@ int main(int argc, char** argv) {
 
     // Launch batches of 8 passes (tens of ms of GPU work) until time is up;
     // waiting after each batch makes the wall clock cover the GPU's work.
+    // A given grid can be tiny (one thread: ~10 s per 256 MiB pass), so
+    // batches are one pass there.
+    int batch = grid_given ? 1 : 8;
     size_t moved = 0;
     auto start = Clock::now();
     auto deadline = start + std::chrono::duration<double>(seconds);
     while (Clock::now() < deadline) {
-        for (int i = 0; i < 8; i++) moved += pass();
+        for (int i = 0; i < batch; i++) moved += pass();
         CHECK(cudaDeviceSynchronize());
     }
     double ns = std::chrono::duration<double, std::nano>(Clock::now() - start).count();

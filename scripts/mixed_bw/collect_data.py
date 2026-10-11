@@ -34,7 +34,7 @@ PATTERNS = ["read", "write", "copy"]
 CPU_GIB = 8
 GPU_MIB = 1024
 CPU_THREADS = os.cpu_count()
-SECONDS = 8
+SECONDS = 30
 SETUP_SECONDS = 3  # for both to allocate and touch their buffers
 
 # The Thor runs NVIDIA's tegra kernel, so use this perf, not the distro wrapper.
