@@ -31,7 +31,7 @@ HERE = Path(__file__).resolve().parent
 
 PATTERNS = ["read", "write", "copy"]
 BUFFER_GIB = 8
-SECONDS = 8
+SECONDS = 30
 THREADS = os.cpu_count()
 SETUP_SECONDS = 3  # for mem to allocate and touch its 16 GiB
 

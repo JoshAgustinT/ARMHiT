@@ -9,7 +9,7 @@ seaborn, so run it with the repo's venv:
 One figure per json, next to it: four panels in a row, uniform insertion /
 lookup then sequential insertion / lookup. Each panel has throughput (Mops,
 solid, left axis) and DRAM bandwidth (GB/s read + write, dashed, right axis)
-per prefetch, plus black lines (same solid / dashed) that scale DOUBLE's
+per prefetch, plus black lines (same solid / dashed) that scale L2's
 1-thread Mops and GB/s linearly with threads. All four panels share the Mops and the GB/s scale.
 """
 
@@ -40,7 +40,7 @@ METRICS = {
 }
 # Linear-scaling reference in black, drawn like its metric (solid Mops, dashed GB/s).
 LINEAR = {m: style for m, (_, style, _) in METRICS.items()}
-LINEAR_FOR = "DOUBLE"  # only this prefetch gets the linear-scaling reference
+LINEAR_FOR = "L2"  # only this prefetch gets the linear-scaling reference
 
 
 # =============================================================================
@@ -49,28 +49,24 @@ LINEAR_FOR = "DOUBLE"  # only this prefetch gets the linear-scaling reference
 
 
 def frame(series, metric):
-    """Long-form frame for one metric: x / y / lo / hi / linear.
+    """Long-form frame for one metric: x / y / linear.
 
-    `y` is the per-point median, lo/hi the min and max over the repeats
-    (the band), and `linear` the 1-thread median times the thread count.
+    `y` is the point's value (one run per point) and `linear` the 1-thread
+    value times the thread count.
     """
     rows = []
-    samples = series.get(f"{metric}_samples") or []
     base = None
-    for i, (threads, y) in enumerate(zip(series["threads"], series[metric])):
+    for threads, y in zip(series["threads"], series[metric]):
         if y is None:
             continue
         if threads == 1:
             base = y
-        point = samples[i] if i < len(samples) else None
         rows.append({
             "x": threads,
             "y": y,
-            "lo": min(point) if point else float("nan"),
-            "hi": max(point) if point else float("nan"),
             "linear": base * threads if base is not None else float("nan"),
         })
-    return pd.DataFrame(rows, columns=["x", "y", "lo", "hi", "linear"])
+    return pd.DataFrame(rows, columns=["x", "y", "linear"])
 
 
 def order(data):
@@ -98,7 +94,6 @@ def draw(ax, ax_bw, data, mode, phase, names, palette, xticks, title):
             if df.empty:
                 continue
             style = {"color": color, "linestyle": linestyle, "marker": marker}
-            ps.draw_band(axes[side], df, style)
             sns.lineplot(data=df, x="x", y="y", ax=axes[side], legend=False, **style)
             if name == LINEAR_FOR:
                 axes[side].plot(df["x"], df["linear"], color="black", linestyle=LINEAR[metric],

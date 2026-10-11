@@ -72,3 +72,25 @@ Streaming tests usually top out at 90-95% of the theoretical peak, so 93% is nea
 - `plot_data.py`: one bar chart, timer vs perf vs peak; ~55 lines.
 - `mem.cu`: kernels unchanged. `main` is now linear: alloc, one `pass` lambda that launches the kernel for the pattern, wait_for_start, warm-up, then batches of 8 passes until time is up, timed with the wall clock (no CUDA events, no pilot pass). The GPU clock poller is gone (pin_ghz.sh pins the clock and the collector checks it).
 - Rerun (8 s, GPU 1386 / EMC 4266 MHz): read 253.0 / write 249.9 / copy 238.8 GB/s timed, perf 253.3 / 250.4 / 239.0. Same as before.
+
+## 2026-10-10 — write via cudaMemset, 30 s runs, rd/wr plot
+- **Why CPU writes (259 GB/s) beat GPU writes (~251)**: smoke tests in a scratch copy, nothing in the repo changed. Ruled out:
+  - request size: bytes / `local_dram_access_wr` = 64.0 B for both;
+  - thread count: 6 blocks x 256 (5% of slots) already 254, 1 warp/SM 239, 2 warps/SM 248, oversubscribed 249;
+  - launch gaps: one kernel doing 64 passes 249-253;
+  - store width / hints: u32 244, uint2 250, uint4 251, `__stcs` 252;
+  - address pattern: 1-64 independent sequential streams all 250-252;
+  - allocation: `cudaMallocManaged` 251, same as `cudaMalloc`. GPU writing CPU `mmap`+THP memory is worse (212, coherence).
+  - Breaking coalescing hurts: only lane 0 storing 77-80; 4 consecutive uint4 per thread 184-205.
+  - Differences seen: ~5% of CPU writes are allocated in the SLC and written back later (`slc_allocate` 630 M vs 13 M for the GPU); GPU writes bypass it. And CPU + GPU writing together (mixed_bw) total 253, below the CPU alone, so GPU writes look slightly less efficient for the DRAM, not just capped by a slower port.
+  - Not tested (needs root): lower the GPU clock. If writes stay ~251 GB/s, the limit is past the GPU.
+- `cudaMemset` was the best GPU write (255.6 vs ~251 GB/s). nsys shows it as a "[CUDA memset]" memop with no kernel, so it likely runs on a dedicated path (copy engine?), unverified. **`write` now uses `cudaMemsetAsync`** instead of the uint4 store kernel (removed). Note scripts/mixed_bw runs this binary, so its GPU write changes too.
+- `SECONDS` 8 -> 30.
+- `plot_data.py` replaced by the rd/wr chart: per pattern, an rd + wr bar (GB/s, % of peak) and the same total split into rd / wr (GB/s, share); a ~0 part is labelled at the bar's foot. The mem.cu timer bar is gone (matches perf to < 1 GB/s). Old thor.json / thor.png deleted.
+- Results (30 s, GPU 1386 / EMC 4266 MHz):
+  | pattern | timed GB/s | perf GB/s (rd / wr) | % of 273 |
+  |---|---|---|---|
+  | read  | 253.4 | 253.7 (253.6 / 0.1) | 93% |
+  | write | 255.1 | 255.3 (0.1 / 255.1) | 94% |
+  | copy  | 238.8 | 238.9 (119.5 / 119.5) | 88% |
+  Write up from ~250 (kernel) to 255 (memset); read and copy unchanged.

@@ -17,7 +17,7 @@ to its default; the binary is rebuilt whenever the flags change.
 | knob | values | notes |
 |---|---|---|
 | `CPUFREQ_MHZ` | required | only scales the printed "cycles"; Mops are wall-clock |
-| `PREFETCH` | `DOUBLE DOUBLE_L2 L1 L2 L3 NTA L2STRM L3STRM NONE` | find path, see below |
+| `PREFETCH` | `NONE DOUBLE L1 L2 L3 L1STRM L2STRM L3STRM` and `X_L1` for each X but L1 | see below |
 | `BRANCH` | `simd`, `branched` | `simd` compares a whole bucket at once (NEON) |
 | `UNIFORM_PROBING` | `ON`/`OFF` | rehash vs. next bucket when a bucket is full |
 | `BUCKETIZATION` | `ON`/`OFF` | implied by `simd`, as in DRAMHiT |
@@ -25,20 +25,22 @@ to its default; the binary is rebuilt whenever the flags change.
 `READ_BEFORE_CAS` is always on and the hasher is always CRC32C. Only
 DRAMHiT's plain `2025` batch loops are ported (no `DRAMHiT_VARIANT` knob).
 
-### Prefetch flavours (ARM `PRFM`)
+### Prefetch schemes (ARM `PRFM`)
 
-| PREFETCH | find path | x86 counterpart |
-|---|---|---|
-| `DOUBLE` | `PLDL3KEEP` when queued + `PLDL1KEEP` 8 entries before dequeue | t2 + t0 |
-| `DOUBLE_L2` | `PLDL2KEEP` when queued + `PLDL1KEEP` 8 entries before dequeue | new |
-| `L1` / `L2` / `L3` | `PLDL{1,2,3}KEEP` | t0 / t1 / t2 |
-| `NTA` | `PLDL1STRM` | nta |
-| `L2STRM` / `L3STRM` | `PLDL{2,3}STRM` | new |
-| `NONE` | nothing | |
+Each scheme prefetches a bucket when its key is queued and, for the doubles,
+again 8 entries before it is dequeued.
 
-The insert path follows `PREFETCH`: `DOUBLE*` uses `PLDL2KEEP` when queued +
-`PSTL1KEEP` before dequeue, `NONE` uses nothing, and everything else uses
-`PSTL1KEEP` (prefetchw).
+| PREFETCH | find path | insert path | x86 counterpart |
+|---|---|---|---|
+| `L1` / `L2` / `L3` | `PLDL{1,2,3}KEEP` | `PSTL1KEEP` | t0 / t1 / t2 (+ prefetchw) |
+| `L1STRM` / `L2STRM` / `L3STRM` | `PLDL{1,2,3}STRM` | `PSTL1KEEP` | nta (L1STRM) |
+| `X_L1` (X = `L2 L3 L1STRM L2STRM L3STRM`) | `PLD X` + `PLDL1KEEP` | `PLD X` + `PSTL1KEEP` | |
+| `DOUBLE` | `PLDL3KEEP` + `PLDL1KEEP` | `PLDL2KEEP` + `PSTL1KEEP` | DRAMHiT's double (t2 + t0) |
+| `NONE` | nothing | nothing | |
+
+`DOUBLE` keeps DRAMHiT's split (L3 on finds, L2 on inserts); `L3_L1` uses L3
+on both. The `STRM` hints still allocate in the (coherent) caches, as a
+"used once" replacement hint, so they work as a first prefetch too.
 
 ## Run
 
@@ -67,25 +69,29 @@ are reserved) and is pinned to cpu `t`.
 ## Experiments
 
 Each experiment is a folder under `scripts/` with its own collector, plotter
-and results (json + png next to the scripts). `scripts/common.py` holds the
-build/run/perf code they share.
+and results (json + png next to the scripts). Each folder is self-contained:
+its collector has its own build, run, perf and clock-check code.
 
 | folder | sweep | series |
 |---|---|---|
-| `scripts/threads/` | 1 .. all cores, 10% fill, `small`/`medium`/`large` table (8 MiB / 256 MiB / 8 GiB), hashed and `--sequential` keys | DOUBLE, L1 |
-| `scripts/prefetches/` | fill 10..90%, all cores, 8 GiB | every prefetch flavour |
+| `scripts/threads/` | 1 .. all cores, 10% fill, ~60 s phases, 1 run per point, full log in `thor-<size>.log`, `small`/`medium`/`large` table (8 MiB / 256 MiB / 8 GiB), hashed and `--sequential` keys | DOUBLE, L1 |
+| `scripts/prefetches/` | fill 10..90%, 14 threads, 8 GiB, ~60 s phases, 1 run per point, full log in `thor.log` | every prefetch scheme |
 
 ```sh
-python3 scripts/threads/collect_data.py large --reps 3     # -> scripts/threads/thor-large.json
+python3 scripts/threads/collect_data.py large             # -> scripts/threads/thor-large.json
 .venv/bin/python scripts/threads/plot_data.py scripts/threads/thor-large.json   # -> .png
 .venv/bin/python scripts/threads/plot_finds.py scripts/threads/thor-large.json  # lookups only -> _finds.png
+python3 scripts/prefetches/collect_data.py               # -> scripts/prefetches/thor.json
+.venv/bin/python scripts/prefetches/plot_data.py scripts/prefetches/thor.json   # -> .png
 ```
 
-Both record Mops and DRAM bandwidth (GB/s) for the insert and find phases,
-the median over `--reps` runs plus every run (the plots shade min..max).
-Iteration counts are sized so every phase runs for ~12 s (a dozen 1 s perf
-samples); passes after the first insert pass update existing keys,
-as in DRAMHiT.
+Both record Mops and DRAM bandwidth (GB/s) for the insert and find phases.
+Iteration counts are sized so every phase runs for ~10-12 s, i.e. ~10 one
+second perf samples, which beats repeating short runs; passes after the first
+insert pass update existing keys, as in DRAMHiT. threads keeps the median
+over `--reps` runs (default 1); prefetches runs each point once, GB/s being
+the median of the phase's 1 s samples (no band: the first and last samples
+are partly warm-up / tail).
 
 ### Bandwidth
 
@@ -118,7 +124,6 @@ src/hashtables/cas_ht.hpp     the hashtable (cas_kht.hpp trimmed to insert_batch
 src/tests/uniform_test.cpp    the test: threads, workload, timing, stats, perf control
 src/args.cpp                  DRAMHiT-compatible argument parsing
 src/main.cpp                  validation + entry
-scripts/common.py             build / run / perf parsing shared by the experiments
 scripts/<experiment>/         collect_data.py, plot_data.py, results
 styling/                      paper_style.py + PLOTTING.md
 ```

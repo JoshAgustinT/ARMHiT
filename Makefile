@@ -18,20 +18,32 @@ $(error CPUFREQ_MHZ is required, e.g. make CPUFREQ_MHZ=2600)
 endif
 DEFS := -DCPUFREQ_MHZ=$(CPUFREQ_MHZ) -DREAD_BEFORE_CAS
 
-# Find path prefetch. The insert path follows it: DOUBLE* -> DOUBLE,
-# NONE -> NONE, everything else -> PREFETCHW.
-PREFETCHES := DOUBLE DOUBLE_L2 L1 L2 L3 NTA L2STRM L3STRM NONE
+# Prefetch scheme. Each name sets the PRFM ops of the two paths:
+#   find:   FIND_PRFM when queued (+ FIND_PRFM_NEXT on the bucket 8 entries
+#           before dequeue, for doubles)
+#   insert: INSERT_PRFM when queued (+ INSERT_PRFM_NEXT 8 before dequeue)
+# Singles X: find PLD X, insert PSTL1KEEP (prefetchw) when queued.
+# Doubles X_L1: find PLD X + PLDL1KEEP, insert PLD X + PSTL1KEEP.
+# DOUBLE is DRAMHiT's scheme: find L3 + L1, insert L2 + PSTL1KEEP.
+LEVELS     := L1 L2 L3 L1STRM L2STRM L3STRM
+PREFETCHES := NONE DOUBLE $(LEVELS) $(addsuffix _L1,$(filter-out L1,$(LEVELS)))
 ifeq ($(filter $(PREFETCH),$(PREFETCHES)),)
 $(error PREFETCH must be one of: $(PREFETCHES))
 endif
-DEFS += -D$(PREFETCH)_PREFETCH
-ifneq ($(filter $(PREFETCH),DOUBLE DOUBLE_L2),)
-  DEFS += -DCAS_INSERT_PREFETCH_DOUBLE
-else ifeq ($(PREFETCH),NONE)
-  DEFS += -DCAS_INSERT_PREFETCH_NONE
-else
-  DEFS += -DCAS_INSERT_PREFETCH_PREFETCHW
+# L2STRM -> pldl2strm, L3 -> pldl3keep
+pld = pld$(if $(findstring STRM,$(1)),$(subst STRM,,$(subst L,l,$(1)))strm,$(subst L,l,$(1))keep)
+
+ifeq ($(PREFETCH),DOUBLE)
+  DEFS += -DFIND_PRFM=pldl3keep -DFIND_PRFM_NEXT=pldl1keep
+  DEFS += -DINSERT_PRFM=pldl2keep -DINSERT_PRFM_NEXT=pstl1keep
+else ifneq ($(filter %_L1,$(PREFETCH)),)
+  FIRST := $(call pld,$(PREFETCH:_L1=))
+  DEFS += -DFIND_PRFM=$(FIRST) -DFIND_PRFM_NEXT=pldl1keep
+  DEFS += -DINSERT_PRFM=$(FIRST) -DINSERT_PRFM_NEXT=pstl1keep
+else ifneq ($(PREFETCH),NONE)
+  DEFS += -DFIND_PRFM=$(call pld,$(PREFETCH)) -DINSERT_PRFM=pstl1keep
 endif
+DEFS += -DPREFETCH_NAME=$(PREFETCH)
 
 ifeq ($(BRANCH),simd)
   DEFS += -DCAS_SIMD -DBUCKETIZATION

@@ -31,7 +31,7 @@ HERE = Path(__file__).resolve().parent
 
 PATTERNS = ["read", "write", "copy"]
 BUFFER_MIB = 1024
-SECONDS = 8
+SECONDS = 30
 SETUP_SECONDS = 2  # for mem to allocate and touch its buffers
 
 # The Thor runs NVIDIA's tegra kernel, so use this perf, not the distro wrapper.

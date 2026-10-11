@@ -119,7 +119,10 @@ struct alignas(16) Item {
 // ARM prefetches. PRFM picks a target level (L1/L2/L3) and a policy (KEEP =
 // temporal, STRM = streaming) for loads (PLD) or stores (PST).
 // ---------------------------------------------------------------------------
-#define PRFM(op, addr) __asm__ volatile("prfm " #op ", [%0]" ::"r"(addr))
+// The ops come from the Makefile (FIND_PRFM, ...), so PRFM expands its
+// arguments before PRFM_ stringifies them.
+#define PRFM(op, addr) PRFM_(op, addr)
+#define PRFM_(op, addr) __asm__ volatile("prfm " #op ", [%0]" ::"r"(addr))
 
 class CASHashTable {
  public:
@@ -334,64 +337,39 @@ class CASHashTable {
     return (KV *)addr;
   }
 
-  // Find-path prefetch, selected by PREFETCH= (see Makefile).
-  // DOUBLE / DOUBLE_L2 pair this queue-time prefetch with prefetch_find_next.
+  // Prefetches, set by PREFETCH= (see Makefile): FIND_PRFM / INSERT_PRFM
+  // when a key is queued, and for the doubles FIND_PRFM_NEXT /
+  // INSERT_PRFM_NEXT on the entry PREFETCH_*_NEXT_DISTANCE behind the tail.
   inline void prefetch_read(uint64_t idx) {
-    [[maybe_unused]] const void *addr = &this->hashtable[idx];
-#if defined(DOUBLE_PREFETCH)
-    PRFM(pldl3keep, addr);
-#elif defined(DOUBLE_L2_PREFETCH)
-    PRFM(pldl2keep, addr);
-#elif defined(L1_PREFETCH)
-    PRFM(pldl1keep, addr);
-#elif defined(L2_PREFETCH)
-    PRFM(pldl2keep, addr);
-#elif defined(L3_PREFETCH)
-    PRFM(pldl3keep, addr);
-#elif defined(NTA_PREFETCH)
-    PRFM(pldl1strm, addr);
-#elif defined(L2STRM_PREFETCH)
-    PRFM(pldl2strm, addr);
-#elif defined(L3STRM_PREFETCH)
-    PRFM(pldl3strm, addr);
-#elif defined(NONE_PREFETCH)
-    // do nothing...
+#if defined(FIND_PRFM)
+    PRFM(FIND_PRFM, &this->hashtable[idx]);
 #else
-#error "no PREFETCH choice defined"
+    (void)idx;
 #endif
   }
 
-  // Second, dequeue-time prefetch of the DOUBLE schemes: pull the bucket of
-  // the entry PREFETCH_FIND_NEXT_DISTANCE behind the tail into L1.
   inline void prefetch_find_next(uint32_t tail) {
-#if defined(DOUBLE_PREFETCH) || defined(DOUBLE_L2_PREFETCH)
+#if defined(FIND_PRFM_NEXT)
     uint32_t next_tail = (tail + PREFETCH_FIND_NEXT_DISTANCE) & FIND_QUEUE_SZ_MASK;
-    PRFM(pldl1keep, &this->hashtable[this->find_queue[next_tail].idx]);
+    PRFM(FIND_PRFM_NEXT, &this->hashtable[this->find_queue[next_tail].idx]);
 #else
     (void)tail;
 #endif
   }
 
-  // Insert-path prefetch, derived from PREFETCH= (see Makefile). DOUBLE pairs
-  // this queue-time L2 prefetch with a dequeue-time prefetch-for-store.
   inline void prefetch_insert(uint64_t idx) {
-    [[maybe_unused]] const void *addr = &this->hashtable[idx];
-#if defined(CAS_INSERT_PREFETCH_DOUBLE)
-    PRFM(pldl2keep, addr);
-#elif defined(CAS_INSERT_PREFETCH_PREFETCHW)
-    PRFM(pstl1keep, addr);
-#elif defined(CAS_INSERT_PREFETCH_NONE)
-    // do nothing...
+#if defined(INSERT_PRFM)
+    PRFM(INSERT_PRFM, &this->hashtable[idx]);
 #else
-#error "no CAS_INSERT_PREFETCH choice defined"
+    (void)idx;
 #endif
   }
 
   inline void prefetch_insert_next(uint32_t tail) {
-#if defined(CAS_INSERT_PREFETCH_DOUBLE)
+#if defined(INSERT_PRFM_NEXT)
     uint32_t next_tail =
         (tail + PREFETCH_INSERT_NEXT_DISTANCE) & INSERT_QUEUE_SZ_MASK;
-    PRFM(pstl1keep, &this->hashtable[this->insert_queue[next_tail].idx]);
+    PRFM(INSERT_PRFM_NEXT, &this->hashtable[this->insert_queue[next_tail].idx]);
 #else
     (void)tail;
 #endif

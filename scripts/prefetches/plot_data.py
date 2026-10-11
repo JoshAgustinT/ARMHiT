@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plot the fill sweeps collected by collect_data.py.
+"""Plot the fill sweep collected by collect_data.py.
 
 Style comes from styling/paper_style.py; see styling/PLOTTING.md. Needs
 seaborn, so run it with the repo's venv:
@@ -9,7 +9,13 @@ seaborn, so run it with the repo's venv:
 
 One figure per json, next to it: throughput (Mops) on the top row and DRAM
 bandwidth (GB/s, read + write) on the bottom row, insertion on the left and
-lookup on the right. A json without bandwidth gets the top row only.
+lookup on the right. One run per point: Mops is the phase's, GB/s the median
+of its 1 s perf samples (no band: the first and last samples are partly
+warm-up / tail, not run-to-run spread).
+
+Thirteen schemes do not fit the shared rocket palette, so this figure uses
+its own: tab20's pairs, a scheme dark and its X + L1 double in the light
+shade of the same hue, all solid.
 """
 
 import argparse
@@ -19,12 +25,14 @@ from pathlib import Path
 
 import pandas as pd
 import seaborn as sns
+from matplotlib import colormaps
+from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "styling"))
 
 import paper_style as ps  # noqa: E402
 
-# The two phases mode 11 times, and what each is called on the page.
+# The two phases dramhit runs, and what each is called on the page.
 PHASES = [
     ("set", "insertion"),
     ("get", "lookup"),
@@ -34,6 +42,42 @@ ROWS = [
     ("mops", "fill", "mops"),
     ("total_gbs", "fill_bw", "bw"),
 ]
+# Legend layout, 7 columns: singles on the first row, doubles on the second,
+# each X + L1 under its X (DRAMHiT's double sits under L1, which has no + L1).
+LEGEND = [
+    "L1", "L2", "L3", "L1STRM", "L2STRM", "L3STRM", "NONE",
+    "DOUBLE", "L2_L1", "L3_L1", "L1STRM_L1", "L2STRM_L1", "L3STRM_L1", None,
+]
+
+# tab20 index (pairs: 2k dark, 2k + 1 light) per scheme.
+_TAB20 = colormaps["tab20"].colors
+COLORS = {
+    "L2": 0, "L2_L1": 1,              # blue
+    "L3": 2, "L3_L1": 3,              # orange
+    "L1STRM": 4, "L1STRM_L1": 5,      # green
+    "L2STRM": 6, "L2STRM_L1": 7,      # red
+    "L3STRM": 8, "L3STRM_L1": 9,      # purple
+    "L1": 10,                         # brown
+    "DOUBLE": 12,                     # pink
+    "NONE": 14,                       # grey
+}
+
+
+# Legend text per PREFETCH= name.
+NAMES = {
+    "NONE": "none", "DOUBLE": "DRAMHiT double",
+    "L1": "L1", "L2": "L2", "L3": "L3",
+    "L1STRM": "L1 strm", "L2STRM": "L2 strm", "L3STRM": "L3 strm",
+    "L2_L1": "L2 + L1", "L3_L1": "L3 + L1", "L1STRM_L1": "L1 strm + L1",
+    "L2STRM_L1": "L2 strm + L1", "L3STRM_L1": "L3 strm + L1",
+}
+
+
+def style(name):
+    """Solid line, colour from COLORS; the doubles get square markers."""
+    return {"color": _TAB20[COLORS[name]] if name in COLORS else "black",
+            "linestyle": "-",
+            "marker": "s" if name.endswith("_L1") or name == "DOUBLE" else "o"}
 
 
 # =============================================================================
@@ -41,61 +85,18 @@ ROWS = [
 # =============================================================================
 
 
-def load(path):
-    data = json.loads(Path(path).read_text())
-    return data if "series" in data else from_legacy(data, path)
-
-
-def from_legacy(rows, path):
-    """Lift the first collector's flat list of runs into the current shape.
-
-    That list held one row per (prefetch, fill) run, with no repeats and no
-    bandwidth, so the figure has no band and no bandwidth row.
-    """
-    series = {}
-    for r in rows:
-        entry = series.setdefault(r["identifier"], {"fills": [], "set_mops": [], "get_mops": []})
-        entry["fills"].append(r["run_cfg"]["fill_factor"])
-        entry["set_mops"].append(r.get("set_mops"))
-        entry["get_mops"].append(r.get("get_mops"))
-    cfg = rows[0]["run_cfg"] if rows else {}
-    print(f"[!] {path}: flat json from the first collector, one run per point -- no band drawn")
-    return {
-        "ht_size_gib": cfg["size"] * 16 / (1 << 30) if cfg else None,
-        "num_threads": cfg.get("numThreads"),
-        "series": series,
-    }
-
-
-def frame(data, metric):
-    """Long-form frame for one metric: series / x / y / lo / hi.
-
-    `y` is the per-point median and lo/hi the min and max over the repeats,
-    which is what the band shows.
-    """
-    rows = []
-    for name in order(data):
-        entry = data["series"][name]
-        samples = entry.get(f"{metric}_samples") or []
-        for i, (fill, y) in enumerate(zip(entry["fills"], entry.get(metric, []))):
-            if y is None:
-                continue
-            point = samples[i] if i < len(samples) else None
-            rows.append({
-                "series": name,
-                "x": fill,
-                "y": y,
-                "lo": min(point) if point else float("nan"),
-                "hi": max(point) if point else float("nan"),
-            })
-    return pd.DataFrame(rows, columns=["series", "x", "y", "lo", "hi"])
+def frame(series, metric):
+    """Long-form frame for one metric: x / y."""
+    rows = [{"x": fill, "y": y}
+            for fill, y in zip(series["fills"], series.get(metric, []))
+            if y is not None]
+    return pd.DataFrame(rows, columns=["x", "y"])
 
 
 def order(data):
-    """Series that actually have points, in the plotting order."""
-    have = [n for n, e in data["series"].items() if e.get("fills")]
-    listed = [n for n in data.get("plot_order", []) if n in have]
-    return listed + ps.order_series(set(have) - set(listed))
+    """Schemes that have points, in the legend's order."""
+    have = {n for n, e in data["series"].items() if e.get("fills")}
+    return [n for n in LEGEND if n in have] + sorted(have - set(LEGEND))
 
 
 # =============================================================================
@@ -103,14 +104,12 @@ def order(data):
 # =============================================================================
 
 
-def draw(ax, df, series, title, labels, xticks, styles):
-    for name in series:
-        sub = df[df["series"] == name].sort_values("x")
-        if sub.empty:
+def draw(ax, data, metric, names, styles, title, labels, xticks):
+    for name in names:
+        df = frame(data["series"][name], metric)
+        if df.empty:
             continue
-        style = styles[name]
-        ps.draw_band(ax, sub, style)
-        sns.lineplot(data=sub, x="x", y="y", ax=ax, legend=False, **style)
+        sns.lineplot(data=df, x="x", y="y", ax=ax, legend=False, **styles[name])
 
     xlabel, ylabel = ps.axis_labels(labels)
     ax.set_xlabel(xlabel)
@@ -122,51 +121,55 @@ def draw(ax, df, series, title, labels, xticks, styles):
     ps.tidy(ax)
 
 
+def add_legend(fig, names, styles):
+    """Two rows (singles, doubles), blanks kept so each X + L1 sits under X."""
+    blank = Line2D([0], [0], color="none", label=" ")
+    handles = [Line2D([0], [0], label=NAMES.get(n, n), **styles[n]) if n in names
+               else blank
+               for n in LEGEND]
+    # matplotlib fills a legend column by column, so interleave the two rows.
+    handles = [h for pair in zip(handles[:7], handles[7:]) for h in pair]
+    handles += [Line2D([0], [0], label=NAMES.get(n, n), **styles[n])
+                for n in names if n not in LEGEND]
+    fig.legend(fontsize=8, handles=handles, loc="upper center", ncol=7)
+
+
 def title_for(data, label):
-    gib = data.get("ht_size_gib")
-    threads = data.get("num_threads")
     bits = [label]
-    if gib:
-        bits.append(f"{gib:g} GiB table")
-    if threads:
-        bits.append(f"{threads} threads")
+    if data.get("ht_size_gib"):
+        bits.append(f"{data['ht_size_gib']:g} GiB")
+    if data.get("num_threads"):
+        bits.append(f"{data['num_threads']} threads")
     return ", ".join(bits)
 
 
 def plot(data, out_stem, split):
     ps.configure_style()
-    palette = ps.configure_palette()
 
-    series = order(data)
-    if not series:
+    names = order(data)
+    if not names:
         print(f"[!] {out_stem}: no series has any points, nothing to plot")
         return
-
-    styles = ps.styles_for(series, palette)
-    xticks = sorted({f for n in series for f in data["series"][n]["fills"]})
-    rows = [r for r in ROWS
-            if not frame(data, f"{PHASES[0][0]}_{r[0]}").empty]
-    # The legend has one entry per prefetch; wrap it rather than run off the page.
-    ncol = min(len(series), 5)
+    styles = {n: style(n) for n in names}
+    xticks = sorted({f for n in names for f in data["series"][n]["fills"]})
 
     if split:
-        for metric, labels, suffix in rows:
+        for metric, labels, suffix in ROWS:
             for phase, label in PHASES:
-                fig, ax = ps.get_subplots(1, 1)
-                draw(ax, frame(data, f"{phase}_{metric}"), series,
-                     title_for(data, label), labels, xticks, styles)
-                ps.add_legend(fig, palette, series, ncol=ncol, styles=styles)
-                ps.save(fig, f"{out_stem}_{phase}_{suffix}.png", legend_top=0.86)
+                fig, ax = ps.get_subplots(1, 1, plot_w=8, plot_h=5)
+                draw(ax, data, f"{phase}_{metric}", names, styles,
+                     title_for(data, label), labels, xticks)
+                add_legend(fig, names, styles)
+                ps.save(fig, f"{out_stem}_{phase}_{suffix}.png", legend_top=0.88)
         return
 
-    fig, axes = ps.get_subplots(len(rows), len(PHASES))
-    axes = axes.reshape(len(rows), len(PHASES))
-    for row, (metric, labels, _) in zip(axes, rows):
+    fig, axes = ps.get_subplots(len(ROWS), len(PHASES), plot_w=5, plot_h=4)
+    for row, (metric, labels, _) in zip(axes, ROWS):
         for ax, (phase, label) in zip(row, PHASES):
-            draw(ax, frame(data, f"{phase}_{metric}"), series,
-                 title_for(data, label), labels, xticks, styles)
-    ps.add_legend(fig, palette, series, ncol=ncol, styles=styles)
-    ps.save(fig, f"{out_stem}.png", legend_top=0.93 if len(rows) > 1 else 0.88)
+            draw(ax, data, f"{phase}_{metric}", names, styles,
+                 title_for(data, label), labels, xticks)
+    add_legend(fig, names, styles)
+    ps.save(fig, f"{out_stem}.png", legend_top=0.93)
 
 
 def main():
@@ -179,7 +182,7 @@ def main():
 
     for path in args.jsons:
         path = Path(path)
-        plot(load(path), str(path.with_suffix("")), args.split)
+        plot(json.loads(path.read_text()), str(path.with_suffix("")), args.split)
 
 
 if __name__ == "__main__":

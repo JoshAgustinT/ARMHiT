@@ -5,27 +5,9 @@
 
 #include "dramhit.hpp"
 
-static const char *prefetch_name() {
-#if defined(DOUBLE_PREFETCH)
-  return "DOUBLE";
-#elif defined(DOUBLE_L2_PREFETCH)
-  return "DOUBLE_L2";
-#elif defined(L1_PREFETCH)
-  return "L1";
-#elif defined(L2_PREFETCH)
-  return "L2";
-#elif defined(L3_PREFETCH)
-  return "L3";
-#elif defined(NTA_PREFETCH)
-  return "NTA";
-#elif defined(L2STRM_PREFETCH)
-  return "L2STRM";
-#elif defined(L3STRM_PREFETCH)
-  return "L3STRM";
-#else
-  return "NONE";
-#endif
-}
+// PREFETCH_NAME is the PREFETCH= make value (see Makefile).
+#define STR_(x) #x
+#define STR(x) STR_(x)
 
 #define CHECK(cond, fmt, ...)       \
   do {                              \
@@ -61,7 +43,7 @@ static void validate() {
 int main(int argc, char **argv) {
   parse_args(argc, argv);
   validate();
-  PLOGI("Hashtable type : Cas HT, prefetch %s, cpufreq %d MHz", prefetch_name(),
+  PLOGI("Hashtable type : Cas HT, prefetch %s, cpufreq %d MHz", STR(PREFETCH_NAME),
         CPUFREQ_MHZ);
   PLOGI("threads %u, ht_size %lu, fill %u%%, insert_factor %lu, read_factor %lu, "
         "batch %u, queue %u%s",

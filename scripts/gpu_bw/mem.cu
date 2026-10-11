@@ -5,7 +5,9 @@
 // Streams a buffer (default 1 GiB, far bigger than any cache) over and over
 // for ~`seconds`, with every thread slot on the GPU busy, and prints GB/s:
 //   read   sum the buffer        (bytes moved = size)
-//   write  fill the buffer       (bytes moved = size)
+//   write  fill the buffer       (bytes moved = size) with cudaMemset: the
+//          driver's fill, ~256 GB/s vs ~251 for a grid-stride uint4 store kernel
+//          (it runs on its own path; nsys shows no kernel for it)
 //   copy   src -> dst            (bytes moved = 2 * size)
 //
 // If MEM_START_AT is set (unix time, seconds), it sets up first and then
@@ -42,11 +44,6 @@ __global__ void read_kernel(const Element* src, size_t n, unsigned* sink) {
     }
     // Never true for our data, but the compiler can't know that, so the loads stay.
     if (sum == 0xdeadbeef) *sink = sum;
-}
-
-__global__ void write_kernel(Element* dst, size_t n) {
-    for (size_t i = blockIdx.x * blockDim.x + threadIdx.x; i < n; i += gridDim.x * blockDim.x)
-        dst[i] = make_uint4(1, 2, 3, 4);
 }
 
 __global__ void copy_kernel(const Element* src, Element* dst, size_t n) {
@@ -98,7 +95,7 @@ int main(int argc, char** argv) {
             return bytes;
         }
         if (!strcmp(pattern, "write")) {
-            write_kernel<<<blocks, threads_per_block>>>(dst, n);
+            CHECK(cudaMemsetAsync(dst, 0x5a, bytes));
             return bytes;
         }
         copy_kernel<<<blocks, threads_per_block>>>(src, dst, n);
