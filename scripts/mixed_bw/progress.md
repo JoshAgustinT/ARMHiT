@@ -25,7 +25,7 @@
 ## Next idea: TEE (OP-TEE) cost on bandwidth (not started)
 - OP-TEE is running (`/dev/tee0` root-only, `nv-tee-supplicant`, ~9 TAs in `/lib/optee_armtz`, `xtest` installed). A call is a world switch on one core; TrustZone doesn't encrypt DRAM, so no per-byte tax is expected, only the calling core's time.
 - Plan: (1) do-nothing call latency (check xtest benchmarks first); (2) one call every X passes, sweep X, GB/s vs time in the TEE; (3) one thread vs all 14 calling (serialization inside OP-TEE?); (4) batched vs per-operation calls.
-- Hurdle: a custom TA needs the TA dev kit and likely NVIDIA's TA signing key; else reuse an existing TA / xtest case.
+- Hurdle: a custom TA needs the TA dev kit. The shipped TAs are signed with OP-TEE 4.6's public default key, so no NVIDIA key is needed (see ../TEE/progress.md).
 
 ## History
 - 2026-10-09: first version (13 threads, 8 s); both mem binaries got MEM_START_AT and gpu_bw a time-based loop; made self-contained, 14 threads.

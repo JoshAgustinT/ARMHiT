@@ -58,7 +58,7 @@ def pinned(lo_file, hi_file):
 
 def run(pattern):
     cmds = {
-        "cpu": [str(CPU_DIR / "mem"), pattern, str(CPU_GIB), str(SECONDS), str(CPU_THREADS)],
+        "cpu": [str(CPU_DIR / "mem"), pattern, str(CPU_GIB * 1024), str(SECONDS), str(CPU_THREADS)],
         "gpu": [str(GPU_DIR / "mem"), pattern, str(GPU_MIB), str(SECONDS)],
     }
     with tempfile.TemporaryDirectory() as tmp:
