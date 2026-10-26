@@ -109,7 +109,7 @@ size_t run_test(const std::string& pattern, uint64_t* src, uint64_t* dst, size_t
         return n * sizeof(uint64_t);
     }
     if (pattern == "read_l3") {
-        for (size_t i = 0; i < n; i += LINE_WORDS) {
+        for (size_t i = 0; i < n; i++) {
             asm volatile("prfm pldl3keep, [%0]" :: "r"(src + i));
         }
         return n * sizeof(uint64_t);
@@ -198,11 +198,17 @@ int main(int argc, char** argv) {
             run_test(pattern, s, d, slice);  // untimed warm-up
 
             size_t moved = 0;
+
+
+
             auto start = Clock::now();
             while (!stop) {
                 moved += run_test(pattern, s, d, slice);
             }
             auto end = Clock::now();
+
+
+            
             double ns = std::chrono::duration<double, std::nano>(end - start).count();
             gbs[t] = moved / ns;  // bytes/ns = GB/s
         });

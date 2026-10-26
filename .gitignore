@@ -1,3 +1,7 @@
 build/
 .venv/
 __pycache__/
+
+# TEE: NVIDIA OP-TEE source + build (rebuild per scripts/TEE/progress.md) and upstream examples
+scripts/TEE/jetson-public-srcs/
+scripts/TEE/optee_examples/

@@ -1,0 +1,594 @@
+=== write group {0-3}: cores 0,1: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 0,1
+huge_page_mib : 4096
+threads : 2
+gbs : 84.41
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp7307qkcv/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:41:14 2026
+
+1.001026035,228955712,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001057992,100.00,,
+1.001026035,84528721828,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001056390,100.00,,
+2.002356304,186363168,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001326542,100.00,,
+2.002356304,84499085116,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001326829,100.00,,
+3.003433074,234095536,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001074746,100.00,,
+3.003433074,84515477376,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001074311,100.00,,
+4.003788796,314307840,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000358097,100.00,,
+4.003788796,84293167256,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000358847,100.00,,
+5.004880463,268706672,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001082931,100.00,,
+5.004880463,84414726560,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001081597,100.00,,
+6.005940058,251504816,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001054811,100.00,,
+6.005940058,84263055472,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001054487,100.00,,
+7.006993077,239220144,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001049894,100.00,,
+7.006993077,84468966240,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001049653,100.00,,
+8.007787921,253082912,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000802144,100.00,,
+8.007787921,84227671888,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000803154,100.00,,
+9.001215151,294261872,,nvidia_ucf_pmu_0/local_dram_byte_rd/,993416657,100.00,,
+9.001215151,83513459100,,nvidia_ucf_pmu_0/local_dram_byte_wr/,993416397,100.00,,
+
+=== write group {0-3}: cores 0,2: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 0,2
+huge_page_mib : 4096
+threads : 2
+gbs : 86.70
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp93o51355/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:41:30 2026
+
+1.001025214,141684880,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001057412,100.00,,
+1.001025214,86553031104,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001055440,100.00,,
+2.002346827,140928464,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001314108,100.00,,
+2.002346827,86599396968,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001313690,100.00,,
+3.003410209,175259984,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001060217,100.00,,
+3.003410209,86492163240,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001060431,100.00,,
+4.003799769,166693472,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000387047,100.00,,
+4.003799769,86406894072,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000386945,100.00,,
+5.004849211,103826224,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001047723,100.00,,
+5.004849211,86556330048,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001046991,100.00,,
+6.005896440,126964304,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001044704,100.00,,
+6.005896440,86525494028,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001045204,100.00,,
+7.006956881,108016176,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001058287,100.00,,
+7.006956881,86500593692,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001058510,100.00,,
+8.007800716,110851120,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000842172,100.00,,
+8.007800716,86565627856,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000841903,100.00,,
+9.001559630,721922448,,nvidia_ucf_pmu_0/local_dram_byte_rd/,993756950,100.00,,
+9.001559630,85815924460,,nvidia_ucf_pmu_0/local_dram_byte_wr/,993756690,100.00,,
+
+=== write group {0-3}: cores 0,3: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 0,3
+huge_page_mib : 4096
+threads : 2
+gbs : 86.72
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp6k_9paez/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:41:46 2026
+
+1.001030483,106083216,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001075181,100.00,,
+1.001030483,86496993676,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001072819,100.00,,
+2.002348761,164579120,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001309400,100.00,,
+2.002348761,86527555864,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001309585,100.00,,
+3.003419284,111368032,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001066267,100.00,,
+3.003419284,86605660140,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001065574,100.00,,
+4.003947681,149136880,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000525678,100.00,,
+4.003947681,86471709624,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000525446,100.00,,
+5.004999308,109372096,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001050481,100.00,,
+5.004999308,86481596968,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001050564,100.00,,
+6.006049265,109608768,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001047839,100.00,,
+6.006049265,86436394680,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001048089,100.00,,
+7.007099488,185845792,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001047967,100.00,,
+7.007099488,86441787280,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001047597,100.00,,
+8.007945381,117136704,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000843302,100.00,,
+8.007945381,86481294960,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000843506,100.00,,
+8.994963483,116447344,,nvidia_ucf_pmu_0/local_dram_byte_rd/,987016310,100.00,,
+8.994963483,85409159184,,nvidia_ucf_pmu_0/local_dram_byte_wr/,987016273,100.00,,
+
+=== write group {0-3}: cores 1,2: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 1,2
+huge_page_mib : 4096
+threads : 2
+gbs : 86.97
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp7o3tfjue/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:42:02 2026
+
+1.001025801,90905744,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001055959,100.00,,
+1.001025801,86647964684,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001054682,100.00,,
+2.002360655,148317728,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001331059,100.00,,
+2.002360655,86645514672,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001330744,100.00,,
+3.003426965,79978240,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001058738,100.00,,
+3.003426965,86570787360,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001058766,100.00,,
+4.004480254,127518816,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001050939,100.00,,
+4.004480254,86636899240,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001050596,100.00,,
+5.005527386,78172640,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001045143,100.00,,
+5.005527386,86619434048,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001044820,100.00,,
+6.006574529,82863680,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001044034,100.00,,
+6.006574529,86669900960,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001044422,100.00,,
+7.007622578,118808560,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001046690,100.00,,
+7.007622578,86590247164,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001046486,100.00,,
+8.008664366,81875824,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001039456,100.00,,
+8.008664366,86515591628,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001039438,100.00,,
+9.001620180,80767760,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992956656,100.00,,
+9.001620180,85875115720,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992957007,100.00,,
+
+=== write group {0-3}: cores 1,3: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 1,3
+huge_page_mib : 4096
+threads : 2
+gbs : 87.08
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpc1yotw24/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:42:18 2026
+
+1.001034032,100748064,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001078274,100.00,,
+1.001034032,86739560264,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001077997,100.00,,
+2.002413601,148047184,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001377070,100.00,,
+2.002413601,87076697632,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001376939,100.00,,
+3.003515752,79780544,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001078781,100.00,,
+3.003515752,86854440552,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001076680,100.00,,
+4.004565303,197580864,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001068506,100.00,,
+4.004565303,86818892728,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001071108,100.00,,
+5.005683182,81733360,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001113686,100.00,,
+5.005683182,86704712056,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001112936,100.00,,
+6.006798750,166684128,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001113865,100.00,,
+6.006798750,86999863004,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001114606,100.00,,
+7.007919967,138606320,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001120386,100.00,,
+7.007919967,86880268516,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001120876,100.00,,
+8.009022444,81197776,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001079551,100.00,,
+8.009022444,86838870624,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001076468,100.00,,
+9.001244605,82710192,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992238282,100.00,,
+9.001244605,86151595992,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992240264,100.00,,
+
+=== write group {0-3}: cores 2,3: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 2,3
+huge_page_mib : 4096
+threads : 2
+gbs : 84.77
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpcocr_dab/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:42:34 2026
+
+1.001023263,81744768,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001047263,100.00,,
+1.001023263,84637291304,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001044939,100.00,,
+2.002343166,144909376,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001335145,100.00,,
+2.002343166,84453349004,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001337589,100.00,,
+3.003450736,84235584,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097060,100.00,,
+3.003450736,84493624596,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096616,100.00,,
+4.004537749,145289936,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001094450,100.00,,
+4.004537749,84672472888,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001094552,100.00,,
+5.005656165,134223536,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001116416,100.00,,
+5.005656165,84380710864,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001116518,100.00,,
+6.006762129,77866560,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001081390,100.00,,
+6.006762129,84790642844,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001078733,100.00,,
+7.007803619,128467328,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001062713,100.00,,
+7.007803619,84396621060,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001065157,100.00,,
+8.008905045,84413536,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001076010,100.00,,
+8.008905045,84688861896,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001073427,100.00,,
+9.001638395,114462880,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992751672,100.00,,
+9.001638395,83744953944,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992754597,100.00,,
+
+=== write group {4-7}: cores 4,5: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 4,5
+huge_page_mib : 4096
+threads : 2
+gbs : 84.86
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpqitikqoq/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:42:50 2026
+
+1.001033334,76268256,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001057241,100.00,,
+1.001033334,84361545796,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001054547,100.00,,
+2.002366094,144142576,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001347714,100.00,,
+2.002366094,84583657920,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001349769,100.00,,
+3.003471539,162819344,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001102935,100.00,,
+3.003471539,84683982832,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102685,100.00,,
+4.004578456,179991168,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103436,100.00,,
+4.004578456,84624592404,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001103381,100.00,,
+5.005689480,110106336,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001111190,100.00,,
+5.005689480,84725666132,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001111430,100.00,,
+6.006803291,106159200,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001114367,100.00,,
+6.006803291,84750973064,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001113895,100.00,,
+7.007917324,112948912,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109921,100.00,,
+7.007917324,84894301984,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001109921,100.00,,
+8.009020570,114462128,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001099894,100.00,,
+8.009020570,84778613328,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001099654,100.00,,
+9.001281872,182094752,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992259375,100.00,,
+9.001281872,83935199816,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992259810,100.00,,
+
+=== write group {4-7}: cores 4,6: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 4,6
+huge_page_mib : 4096
+threads : 2
+gbs : 87.02
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp5qcagz6s/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:43:06 2026
+
+1.001023902,79427200,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001051133,100.00,,
+1.001023902,86735176240,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001046855,100.00,,
+2.002348057,126121136,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001337061,100.00,,
+2.002348057,86865708024,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001339219,100.00,,
+3.003455349,108309888,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001104477,100.00,,
+3.003455349,86925564680,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001104718,100.00,,
+4.004560328,182019344,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103218,100.00,,
+4.004560328,86958567124,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102986,100.00,,
+5.005657194,82027168,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001076663,100.00,,
+5.005657194,86875612428,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001074514,100.00,,
+6.006698782,134822528,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001061634,100.00,,
+6.006698782,86747603192,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001063616,100.00,,
+7.007807289,329308608,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001100089,100.00,,
+7.007807289,86798440628,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100858,100.00,,
+8.008906701,316797424,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001098736,100.00,,
+8.008906701,86675578692,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001098291,100.00,,
+9.001562057,79004672,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992637390,100.00,,
+9.001562057,86057093480,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992635825,100.00,,
+
+=== write group {4-7}: cores 4,7: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 4,7
+huge_page_mib : 4096
+threads : 2
+gbs : 86.97
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpdo8dm2o8/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:43:22 2026
+
+1.001034534,105132240,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001076846,100.00,,
+1.001034534,86864231512,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001075977,100.00,,
+2.002415429,85336512,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001374773,100.00,,
+2.002415429,86874998832,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001375689,100.00,,
+3.003517149,83947360,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001102238,100.00,,
+3.003517149,86785035968,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100997,100.00,,
+4.004618757,128721584,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001095504,100.00,,
+4.004618757,86645705256,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096125,100.00,,
+5.005716019,78828560,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097178,100.00,,
+5.005716019,86640555000,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096391,100.00,,
+6.006815194,87408656,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097425,100.00,,
+6.006815194,86665852024,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001097841,100.00,,
+7.007916272,1129840704,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097039,100.00,,
+7.007916272,86459886240,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096465,100.00,,
+8.009011634,185706576,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001095739,100.00,,
+8.009011634,86521066864,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001095906,100.00,,
+9.001590494,117307264,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992572840,100.00,,
+9.001590494,85821302632,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992573145,100.00,,
+
+=== write group {4-7}: cores 5,6: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 5,6
+huge_page_mib : 4096
+threads : 2
+gbs : 87.08
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpu__8lpx1/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:43:38 2026
+
+1.001034468,115267584,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001074994,100.00,,
+1.001034468,86914329364,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001074280,100.00,,
+2.002382667,120060192,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001355335,100.00,,
+2.002382667,86873555344,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001355567,100.00,,
+3.003495212,196508080,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001099913,100.00,,
+3.003495212,86847761488,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100302,100.00,,
+4.004605730,278341392,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001105702,100.00,,
+4.004605730,86746031072,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001105850,100.00,,
+5.005717846,232120000,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001112291,100.00,,
+5.005717846,87050418496,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001112096,100.00,,
+6.006831077,141931120,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001111173,100.00,,
+6.006831077,86925277968,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001110683,100.00,,
+7.007936782,160858192,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001106916,100.00,,
+7.007936782,86973303348,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106629,100.00,,
+8.009049441,254713248,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001107945,100.00,,
+8.009049441,86855323796,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001107732,100.00,,
+9.001398360,195470496,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992344601,100.00,,
+9.001398360,85884540664,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992345387,100.00,,
+
+=== write group {4-7}: cores 5,7: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 5,7
+huge_page_mib : 4096
+threads : 2
+gbs : 86.93
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp0a6v9cy7/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:43:54 2026
+
+1.001029360,302278768,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001067961,100.00,,
+1.001029360,86672875312,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001066886,100.00,,
+2.002387630,149751456,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001356629,100.00,,
+2.002387630,86701533928,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001357342,100.00,,
+3.003484663,198508736,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001093714,100.00,,
+3.003484663,86746551856,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001093270,100.00,,
+4.004577913,143879712,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001092537,100.00,,
+4.004577913,86700465064,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001092008,100.00,,
+5.005676853,303375296,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001101057,100.00,,
+5.005676853,86916260824,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001101197,100.00,,
+6.006782295,132277232,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001096856,100.00,,
+6.006782295,86748750568,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096828,100.00,,
+7.007877553,162386736,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001096395,100.00,,
+7.007877553,86843086616,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096404,100.00,,
+8.008983874,149519136,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001102625,100.00,,
+8.008983874,86816766564,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102282,100.00,,
+9.001656207,244597648,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992672504,100.00,,
+9.001656207,86059333812,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992673190,100.00,,
+
+=== write group {4-7}: cores 6,7: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 6,7
+huge_page_mib : 4096
+threads : 2
+gbs : 84.75
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp0jlu_m43/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:44:10 2026
+
+1.001041942,135262464,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001079366,100.00,,
+1.001041942,84416407088,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001078246,100.00,,
+2.002390691,138322064,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001351330,100.00,,
+2.002390691,84535410532,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001351431,100.00,,
+3.003510217,166234256,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001117597,100.00,,
+3.003510217,84642314224,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001118264,100.00,,
+4.004625243,96636272,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001110551,100.00,,
+4.004625243,84441549708,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001110181,100.00,,
+5.005732381,169013472,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103654,100.00,,
+5.005732381,84631259552,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001103357,100.00,,
+6.006834467,364705136,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001101036,100.00,,
+6.006834467,84407839344,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100861,100.00,,
+7.007935752,281009792,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001099228,100.00,,
+7.007935752,84309902584,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001099236,100.00,,
+8.009073650,114416480,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001140774,100.00,,
+8.009073650,84617224080,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001140589,100.00,,
+9.001413548,110217488,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992331921,100.00,,
+9.001413548,83860047580,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992331700,100.00,,
+
+=== write group {8-11}: cores 8,9: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 8,9
+huge_page_mib : 4096
+threads : 2
+gbs : 84.71
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpb2s9xyjg/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:44:26 2026
+
+1.001032494,84302784,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001067305,100.00,,
+1.001032494,84688624376,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001066286,100.00,,
+2.002364527,1348432656,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001335002,100.00,,
+2.002364527,84896939972,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001335659,100.00,,
+3.003477664,131063872,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109921,100.00,,
+3.003477664,84626307212,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001109107,100.00,,
+4.004590898,140418144,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001112648,100.00,,
+4.004590898,84612956560,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001113489,100.00,,
+5.005704666,115476080,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109977,100.00,,
+5.005704666,84576912596,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001108636,100.00,,
+6.006812415,441530272,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001105329,100.00,,
+6.006812415,84612943244,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106791,100.00,,
+7.007915716,291060384,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103825,100.00,,
+7.007915716,84804106896,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102714,100.00,,
+8.009022422,186773008,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001105824,100.00,,
+8.009022422,84513122032,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106546,100.00,,
+9.001276983,139168384,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992249242,100.00,,
+9.001276983,83682496880,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992248446,100.00,,
+
+=== write group {8-11}: cores 8,10: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 8,10
+huge_page_mib : 4096
+threads : 2
+gbs : 87.01
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpd8z2ny_v/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:44:42 2026
+
+1.001032490,399329824,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001074634,100.00,,
+1.001032490,86899701360,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001074569,100.00,,
+2.002389876,194700800,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001354446,100.00,,
+2.002389876,86693955336,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001353604,100.00,,
+3.003498304,118998720,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001106018,100.00,,
+3.003498304,86879903080,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106304,100.00,,
+4.004615828,135964560,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001113150,100.00,,
+4.004615828,86884491748,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001112900,100.00,,
+5.005718340,133197344,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001101990,100.00,,
+5.005718340,86873857516,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001101999,100.00,,
+6.006824711,163746816,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001105784,100.00,,
+6.006824711,86787892928,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106312,100.00,,
+7.007942498,107193024,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001116485,100.00,,
+7.007942498,86878984148,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001116374,100.00,,
+8.009054619,129001360,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001107673,100.00,,
+8.009054619,86750948756,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001107321,100.00,,
+9.001266692,122077648,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992211356,100.00,,
+9.001266692,86067087096,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992211069,100.00,,
+
+=== write group {8-11}: cores 8,11: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 8,11
+huge_page_mib : 4096
+threads : 2
+gbs : 87.00
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpebhlde8c/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:44:58 2026
+
+1.001030099,153543056,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001069325,100.00,,
+1.001030099,86550405040,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001069197,100.00,,
+2.002395685,130354272,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001362082,100.00,,
+2.002395685,86532572440,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001361887,100.00,,
+3.003500020,115392912,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001107136,100.00,,
+3.003500020,86554639064,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001107136,100.00,,
+4.004614158,135768592,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001110772,100.00,,
+4.004614158,86561850792,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001111180,100.00,,
+5.005730622,246283440,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001113887,100.00,,
+5.005730622,86416814656,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001113043,100.00,,
+6.006844472,83799776,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109725,100.00,,
+6.006844472,86716501664,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001110309,100.00,,
+7.007947379,83811120,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001099366,100.00,,
+7.007947379,86508687160,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001099459,100.00,,
+8.009072028,90618752,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001125395,100.00,,
+8.009072028,86536169680,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001125209,100.00,,
+9.001428232,78144512,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992352995,100.00,,
+9.001428232,85771654376,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992353579,100.00,,
+
+=== write group {8-11}: cores 9,10: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 9,10
+huge_page_mib : 4096
+threads : 2
+gbs : 86.99
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpoq15ucyy/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:45:14 2026
+
+1.001031191,80980720,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001074113,100.00,,
+1.001031191,86673086244,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001069372,100.00,,
+2.002387442,377812352,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001354060,100.00,,
+2.002387442,86730844568,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001353384,100.00,,
+3.003491581,207376880,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001104033,100.00,,
+3.003491581,86616451656,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001103969,100.00,,
+4.004597063,114845280,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001100894,100.00,,
+4.004597063,86680819208,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100727,100.00,,
+5.005700960,172096448,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001102217,100.00,,
+5.005700960,86623347112,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001103161,100.00,,
+6.006014007,78698064,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000311932,100.00,,
+6.006014007,86527503280,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000311367,100.00,,
+7.007120340,79858960,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103198,100.00,,
+7.007120340,86679791836,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102708,100.00,,
+8.008230814,80337520,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001112006,100.00,,
+8.008230814,86556852740,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001112497,100.00,,
+9.001605987,79194560,,nvidia_ucf_pmu_0/local_dram_byte_rd/,993370768,100.00,,
+9.001605987,85880565832,,nvidia_ucf_pmu_0/local_dram_byte_wr/,993370480,100.00,,
+
+=== write group {8-11}: cores 9,11: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 9,11
+huge_page_mib : 4096
+threads : 2
+gbs : 87.02
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmp0wb8t6h4/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:45:30 2026
+
+1.001031157,125007888,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001068042,100.00,,
+1.001031157,86449214152,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001067005,100.00,,
+2.002375168,87080320,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001344487,100.00,,
+2.002375168,86829538264,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001344551,100.00,,
+3.003483169,132581296,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109014,100.00,,
+3.003483169,86800903496,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001110413,100.00,,
+4.004595503,84741536,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001103894,100.00,,
+4.004595503,86660263656,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001102523,100.00,,
+5.005697295,83757280,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001100759,100.00,,
+5.005697295,86906850576,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001101333,100.00,,
+6.006803894,190829200,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001108159,100.00,,
+6.006803894,86856880440,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001108122,100.00,,
+7.007914603,84090944,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109333,100.00,,
+7.007914603,86722357412,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001108537,100.00,,
+8.009028852,105447152,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001111559,100.00,,
+8.009028852,86686404540,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001111772,100.00,,
+9.001454068,114957712,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992420182,100.00,,
+9.001454068,86124074712,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992419876,100.00,,
+
+=== write group {8-11}: cores 10,11: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 10,11
+huge_page_mib : 4096
+threads : 2
+gbs : 84.81
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpkax_5_9a/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:45:46 2026
+
+1.001031298,105671040,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001069126,100.00,,
+1.001031298,84359240888,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001067626,100.00,,
+2.002363956,103051872,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001328912,100.00,,
+2.002363956,84394293976,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001328902,100.00,,
+3.003458611,81332704,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001091307,100.00,,
+3.003458611,84389026364,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001091353,100.00,,
+4.004569338,100320816,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001110389,100.00,,
+4.004569338,84380684784,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001110380,100.00,,
+5.005677234,104019424,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001106121,100.00,,
+5.005677234,84421035396,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106426,100.00,,
+6.006779563,171712064,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097953,100.00,,
+6.006779563,84396179592,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001098463,100.00,,
+7.007877158,201133616,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001097413,100.00,,
+7.007877158,84543466632,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001097246,100.00,,
+8.008977993,90045872,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001099459,100.00,,
+8.008977993,84294271584,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001099024,100.00,,
+9.001048633,99679904,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992065338,100.00,,
+9.001048633,83739842384,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992064838,100.00,,
+
+=== write group {12-13}: cores 12,13: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 12,13
+huge_page_mib : 4096
+threads : 2
+gbs : 84.27
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpschqy96g/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:46:02 2026
+
+1.001032097,212579888,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001075128,100.00,,
+1.001032097,83634701100,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001073999,100.00,,
+2.002399240,119524960,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001362340,100.00,,
+2.002399240,83987508504,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001362358,100.00,,
+3.003505999,89820688,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001104291,100.00,,
+3.003505999,83975922816,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001104763,100.00,,
+4.004609920,96370912,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001101293,100.00,,
+4.004609920,84115482040,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001100970,100.00,,
+5.005719883,107563616,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001110124,100.00,,
+5.005719883,84183525832,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001109985,100.00,,
+6.006828986,160146432,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001109061,100.00,,
+6.006828986,84134530884,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001108727,100.00,,
+7.007942951,104866256,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001107811,100.00,,
+7.007942951,84156165072,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001107681,100.00,,
+8.009050406,101258112,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001106393,100.00,,
+8.009050406,84063966748,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001106329,100.00,,
+9.001455628,118104272,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992403669,100.00,,
+9.001455628,83270565928,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992404150,100.00,,
+
+=== write reference, different groups: cores 0,4: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 0,4
+huge_page_mib : 4096
+threads : 2
+gbs : 95.60
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpasg1jjxd/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:46:18 2026
+
+1.001031119,88212240,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001078603,100.00,,
+1.001031119,95143454804,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001077761,100.00,,
+2.002370168,89074928,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001332866,100.00,,
+2.002370168,95330114316,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001333338,100.00,,
+3.003469844,86732304,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001096930,100.00,,
+3.003469844,95285300796,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001096179,100.00,,
+4.003957280,86177712,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000479013,100.00,,
+4.003957280,95301110888,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000477246,100.00,,
+5.005014689,89326128,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001050663,100.00,,
+5.005014689,95358800992,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001050987,100.00,,
+6.006067580,88755936,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001050940,100.00,,
+6.006067580,95346175616,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001050865,100.00,,
+7.007122256,160297968,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001052401,100.00,,
+7.007122256,95383343392,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001052624,100.00,,
+8.007956778,87887728,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1000834952,100.00,,
+8.007956778,95307840176,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1000834609,100.00,,
+8.999057499,88394304,,nvidia_ucf_pmu_0/local_dram_byte_rd/,991096836,100.00,,
+8.999057499,94394824352,,nvidia_ucf_pmu_0/local_dram_byte_wr/,991097021,100.00,,
+
+=== write reference, different groups: cores 4,8: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 4,8
+huge_page_mib : 4096
+threads : 2
+gbs : 95.97
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpmf83flt_/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:46:34 2026
+
+1.001030344,81784160,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001074922,100.00,,
+1.001030344,95601957016,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001072912,100.00,,
+2.002381281,103538144,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001347392,100.00,,
+2.002381281,95570994956,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001347651,100.00,,
+3.003767239,85607552,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001386479,100.00,,
+3.003767239,95592822556,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001385748,100.00,,
+4.004867925,84705488,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001092300,100.00,,
+4.004867925,95582544568,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001092402,100.00,,
+5.005959448,81115584,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001088470,100.00,,
+5.005959448,95579640212,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001089395,100.00,,
+6.007764917,83503120,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001797878,100.00,,
+6.007764917,95663378636,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001795656,100.00,,
+7.008832270,89071616,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001072021,100.00,,
+7.008832270,95589458280,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001073780,100.00,,
+8.009915524,80421392,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001076563,100.00,,
+8.009915524,95567596940,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001075989,100.00,,
+9.001607645,78224592,,nvidia_ucf_pmu_0/local_dram_byte_rd/,991694577,100.00,,
+9.001607645,94726937288,,nvidia_ucf_pmu_0/local_dram_byte_wr/,991694984,100.00,,
+
+=== write reference, different groups: cores 8,12: 2 threads ===
+$ /home/thor/Desktop/josh/ARMHiT/scripts/cpu_bw/mem write 2048 10 8,12
+huge_page_mib : 4096
+threads : 2
+gbs : 95.92
+$ /usr/lib/linux-tools/6.8.0-146-generic/perf stat -a -x, -I 1000 -e nvidia_ucf_pmu_0/local_dram_byte_rd/,nvidia_ucf_pmu_0/local_dram_byte_wr/ -o /tmp/tmpx7mmsn6j/perf.csv -D 6500 -- sleep 15.5
+# started on Sun Oct 18 23:46:50 2026
+
+1.001027487,165469232,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001061156,100.00,,
+1.001027487,95754590656,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001060508,100.00,,
+2.002363042,129430208,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001334975,100.00,,
+2.002363042,95662360816,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001335336,100.00,,
+3.003470576,218248832,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001107369,100.00,,
+3.003470576,95628571656,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001107841,100.00,,
+4.004593141,219212928,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001121715,100.00,,
+4.004593141,95613893160,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001121706,100.00,,
+5.005705153,83779328,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001104014,100.00,,
+5.005705153,95597265092,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001104171,100.00,,
+6.006816758,149253280,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001117311,100.00,,
+6.006816758,95585937388,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001116904,100.00,,
+7.007923399,194751744,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001098217,100.00,,
+7.007923399,95644692568,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001098097,100.00,,
+8.009021485,78919984,,nvidia_ucf_pmu_0/local_dram_byte_rd/,1001083875,100.00,,
+8.009021485,95644934392,,nvidia_ucf_pmu_0/local_dram_byte_wr/,1001082430,100.00,,
+9.001244379,219334608,,nvidia_ucf_pmu_0/local_dram_byte_rd/,992233395,100.00,,
+9.001244379,94778056148,,nvidia_ucf_pmu_0/local_dram_byte_wr/,992234692,100.00,,
+

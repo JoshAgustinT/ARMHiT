@@ -81,3 +81,61 @@ Before 1: run the root checks below (secure heap size, concurrent sessions), the
 
 ## History
 - 2026-10-11: surveyed OP-TEE on the board; found the TAs signed with the public 4.6 default key; no xtest runs (no root). Wrote takeaways (what a TA does / doesn't guarantee) and the plan: cpu_bw in a TA vs 2 MiB and 4 KiB baselines first, attestation later.
+- 2026-10-26: build prerequisites for the OP-TEE source (`atf_and_optee_README.txt` points to optee.readthedocs.io/en/latest/building/prerequisites.html, which only gives a Dockerfile for Ubuntu 22.04). Its apt list adapted to this board (Ubuntu 24.04), installing everything instead of picking the needed packages:
+  ```
+  sudo apt update
+  sudo apt install -y \
+      adb acpica-tools autoconf automake bc bison build-essential ccache cpio cscope curl \
+      device-tree-compiler e2tools expect fastboot flex ftp-upload gdisk git \
+      libgnutls28-dev libattr1-dev libcap-ng-dev libfdt-dev libftdi-dev libglib2.0-dev \
+      libgmp-dev libhidapi-dev libmpc-dev libncurses-dev libpixman-1-dev libslirp-dev \
+      libssl-dev libtool libusb-1.0-0-dev make mtools netcat-openbsd ninja-build \
+      python3-cryptography python3-pip python3-pyelftools python3-serial python3-tomli \
+      python-is-python3 rsync swig unzip uuid-dev wget xdg-utils xsltproc xterm xz-utils \
+      zlib1g-dev python3-pycryptodome pkg-config
+  ```
+  Changes from the Dockerfile:
+  | Dockerfile | here | why |
+  |---|---|---|
+  | `libgmp3-dev` | `libgmp-dev` | renamed in 24.04 |
+  | `libncurses5-dev` | `libncurses-dev` | renamed in 24.04 |
+  | `netcat` | `netcat-openbsd` | `netcat` is only a virtual package in 24.04 |
+  | — | `python3-pycryptodome` | named in NVIDIA's README |
+  | — | `pkg-config` | named in NVIDIA's README (PKG-CONFIG section) |
+  | `upgrade -y`, `repo init/sync`, `make toolchains`, `make check` | dropped | they build the upstream QEMU dev environment, not needed |
+
+  The renames don't affect the build, which uses the headers and libraries (`gmp.h`, `libncurses`, `nc`), not package names, and those are the same. Neither optee_os nor optee_client uses gmp, ncurses or netcat (they are for QEMU / kernel menuconfig). What this build actually needs: build-essential, python3-cryptography (41.0.7, new enough), pkgconf, uuid-dev (already installed) and **python3-pyelftools (was missing)**. pycryptodome is only used by optee_os's `sign_rproc_fw.py`, which isn't part of this build.
+- 2026-10-26: the README's `<platform>` is **264** on this board (`/proc/device-tree/model` = "NVIDIA Jetson AGX Thor Developer Kit", `compatible` includes `nvidia,tegra264`; 234 is Orin). So it's `./optee_src_build.sh -p t264`, `optee/tegra264-optee.dts` and outputs in `optee/build/t264/` / `optee/install/t264/`.
+- 2026-10-26: toolchain: skip the download, use the native gcc (the build script still needs the vars):
+  ```
+  export CROSS_COMPILE_AARCH64_PATH=/usr
+  export CROSS_COMPILE_AARCH64=/usr/bin/aarch64-linux-gnu-
+  export PKG_CONFIG=/usr/bin/pkg-config
+  ```
+- 2026-10-26: from `atf_and_optee_README.txt`, only run `./optee_src_build.sh -p t264` (no `-t`, fTPM not needed). It gives `optee/build/t264/export-ta_arm64/` and `optee/install/t264/usr` for the TA/CA build. Skip the dtb, ATF, tos.img and flashing sections (firmware already on the board), and don't copy `install/t264` to the system (it would replace tee-supplicant / libteec); point `OPTEE_CLIENT_EXPORT` / `TEEC_EXPORT` at it in place.
+- 2026-10-26: built OP-TEE (with `-t` after all), in `TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/`:
+  `./optee_src_build.sh -p t264 -t`
+  Outputs present: `optee/build/t264/export-ta_arm64/` and `optee/install/t264/usr/{include,lib,sbin}` (incl. `libteec.so`).
+- 2026-10-26: TA examples: `TEE/optee_examples/` (github.com/linaro-swg/optee_examples, from the OP-TEE docs). The checkout is **4.11.0**, newer than the board's OP-TEE 4.6 (fine for hello_world; `git checkout 4.6.0` to match). More TA source: `jetson-optee-srcs/optee/optee_test/ta/` (xtest TAs) and `optee/samples/` (NVIDIA's).
+  hello_world: the CA opens a session on TA `8aaaf200-2450-11e4-abe2-0002a5d5c51b`, sends 42 with command `INC_VALUE`, the TA increments it and the CA prints 43. Build, install, run:
+  > make -C ~/Desktop/josh/ARMHiT/scripts/TEE/optee_examples/hello_world CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- TA_DEV_KIT_DIR=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/build/t264/export-ta_arm64/ OPTEE_CLIENT_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr TEEC_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr -j"$(nproc)"
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/optee_examples/hello_world/ta/8aaaf200-2450-11e4-abe2-0002a5d5c51b.ta /lib/optee_armtz/
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/optee_examples/hello_world/host/optee_example_hello_world /usr/sbin/
+  > sudo optee_example_hello_world
+
+  Worked: prints `TA incremented value to 43`.
+- 2026-10-26: copied hello_world (source only, `git archive` from optee_examples) to `TEE/josh_ta/hello_world/` to build it outside optee_examples. Unchanged, same UUID, so it replaces the installed one. Build, install, run:
+  > make -C ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/hello_world CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- TA_DEV_KIT_DIR=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/build/t264/export-ta_arm64/ OPTEE_CLIENT_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr TEEC_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr -j"$(nproc)"
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/hello_world/ta/8aaaf200-2450-11e4-abe2-0002a5d5c51b.ta /lib/optee_armtz/
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/hello_world/host/optee_example_hello_world /usr/sbin/
+  > sudo optee_example_hello_world
+  Clean (removes build outputs in the source dir only; the installed `.ta` and CA stay):
+  > make -C ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/hello_world CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- TA_DEV_KIT_DIR=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/build/t264/export-ta_arm64/ clean
+- 2026-10-26: `josh_ta/first_ta/`: copy of hello_world, the TA hashes the value instead: `v *= 2654435761u` (uint32, wraps). Own UUID `3bab25ff-a946-433e-a002-b40f1013800e`, command `TA_FIRST_CMD_HASH_VALUE`, CA `first_ta`; files renamed to `ta/first_ta.c`, `ta/include/first_ta.h`. Builds, signs and **runs**: `sudo first_ta 1..5` -> 2654435761, 1013904226, 3668339987, 2027808452, 387276917 (correct). Not a secure hash: invertible (inverse 244002641 mod 2^32), constant is public. The CA takes the value as its first arg (decimal, or 0x hex), and prints usage if it's missing. Expected: `TA hashed value to 4112119562` (42 * 2654435761 mod 2^32).
+  Build, install, run:
+  > make -C ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/first_ta CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- TA_DEV_KIT_DIR=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/build/t264/export-ta_arm64/ OPTEE_CLIENT_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr TEEC_EXPORT=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/install/t264/usr -j"$(nproc)"
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/first_ta/ta/3bab25ff-a946-433e-a002-b40f1013800e.ta /lib/optee_armtz/
+  > sudo cp ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/first_ta/host/first_ta /usr/sbin/
+  > sudo first_ta 42
+  Clean:
+  > make -C ~/Desktop/josh/ARMHiT/scripts/TEE/josh_ta/first_ta CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- TA_DEV_KIT_DIR=~/Desktop/josh/ARMHiT/scripts/TEE/jetson-public-srcs/Linux_for_Tegra/source/jetson-optee-srcs/optee/build/t264/export-ta_arm64/ clean

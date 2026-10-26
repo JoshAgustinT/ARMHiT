@@ -1,0 +1,302 @@
+{
+  "size_mib": 2048,
+  "seconds": 10,
+  "cpu_khz": 2601000,
+  "emc_hz": 4266000000,
+  "peak_gbs": 273.024,
+  "groups": {
+    "group {0-3}": [
+      {
+        "threads": 2,
+        "cores": "0,1",
+        "timed_gbs": 84.41,
+        "perf_rd_gbs": 0.2522433303423245,
+        "perf_wr_gbs": 84.29126168353282,
+        "perf_gbs": 84.54350501387515,
+        "pair": [
+          0,
+          1
+        ],
+        "same_clock_pair": true
+      },
+      {
+        "threads": 2,
+        "cores": "0,2",
+        "timed_gbs": 86.7,
+        "perf_rd_gbs": 0.19953711934265075,
+        "perf_wr_gbs": 86.43112458526666,
+        "perf_gbs": 86.63066170460931,
+        "pair": [
+          0,
+          2
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "0,3",
+        "timed_gbs": 86.72,
+        "perf_rd_gbs": 0.13002559613116754,
+        "perf_wr_gbs": 86.42067015692159,
+        "perf_gbs": 86.55069575305275,
+        "pair": [
+          0,
+          3
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "1,2",
+        "timed_gbs": 86.97,
+        "perf_rd_gbs": 0.09878312294400247,
+        "perf_wr_gbs": 86.51452219138456,
+        "perf_gbs": 86.61330531432856,
+        "pair": [
+          1,
+          2
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "1,3",
+        "timed_gbs": 87.08,
+        "perf_rd_gbs": 0.11965962840085297,
+        "perf_wr_gbs": 86.77276493726977,
+        "perf_gbs": 86.89242456567062,
+        "pair": [
+          1,
+          3
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "2,3",
+        "timed_gbs": 84.77,
+        "perf_rd_gbs": 0.1106032964621653,
+        "perf_wr_gbs": 84.4575721227292,
+        "perf_gbs": 84.56817541919136,
+        "pair": [
+          2,
+          3
+        ],
+        "same_clock_pair": true
+      }
+    ],
+    "group {4-7}": [
+      {
+        "threads": 2,
+        "cores": "4,5",
+        "timed_gbs": 84.86,
+        "perf_rd_gbs": 0.13209112792714164,
+        "perf_wr_gbs": 84.58090526813132,
+        "perf_gbs": 84.71299639605846,
+        "pair": [
+          4,
+          5
+        ],
+        "same_clock_pair": true
+      },
+      {
+        "threads": 2,
+        "cores": "4,6",
+        "timed_gbs": 87.02,
+        "perf_rd_gbs": 0.15973190276224114,
+        "perf_wr_gbs": 86.72260671072799,
+        "perf_gbs": 86.88233861349023,
+        "pair": [
+          4,
+          6
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "4,7",
+        "timed_gbs": 86.97,
+        "perf_rd_gbs": 0.22243015960209414,
+        "perf_wr_gbs": 86.57104240996956,
+        "perf_gbs": 86.79347256957166,
+        "pair": [
+          4,
+          7
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "5,6",
+        "timed_gbs": 87.08,
+        "perf_rd_gbs": 0.188333675888588,
+        "perf_wr_gbs": 86.77193925423305,
+        "perf_gbs": 86.96027293012163,
+        "pair": [
+          5,
+          6
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "5,7",
+        "timed_gbs": 86.93,
+        "perf_rd_gbs": 0.19847124812534916,
+        "perf_wr_gbs": 86.67334052546757,
+        "perf_gbs": 86.87181177359291,
+        "pair": [
+          5,
+          7
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "6,7",
+        "timed_gbs": 84.75,
+        "perf_rd_gbs": 0.17506290319224138,
+        "perf_wr_gbs": 84.41565711509007,
+        "perf_gbs": 84.59072001828231,
+        "pair": [
+          6,
+          7
+        ],
+        "same_clock_pair": true
+      }
+    ],
+    "group {8-11}": [
+      {
+        "threads": 2,
+        "cores": "8,9",
+        "timed_gbs": 84.71,
+        "perf_rd_gbs": 0.3197566885243743,
+        "perf_wr_gbs": 84.54496644035773,
+        "perf_gbs": 84.8647231288821,
+        "pair": [
+          8,
+          9
+        ],
+        "same_clock_pair": true
+      },
+      {
+        "threads": 2,
+        "cores": "8,10",
+        "timed_gbs": 87.01,
+        "perf_rd_gbs": 0.16711047408963736,
+        "perf_wr_gbs": 86.73387734027983,
+        "perf_gbs": 86.90098781436947,
+        "pair": [
+          8,
+          10
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "8,11",
+        "timed_gbs": 87.0,
+        "perf_rd_gbs": 0.12417069996405156,
+        "perf_wr_gbs": 86.44709558030668,
+        "perf_gbs": 86.57126628027073,
+        "pair": [
+          8,
+          11
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "9,10",
+        "timed_gbs": 86.99,
+        "perf_rd_gbs": 0.14121890470213816,
+        "perf_wr_gbs": 86.53649000666593,
+        "perf_gbs": 86.67770891136807,
+        "pair": [
+          9,
+          10
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "9,11",
+        "timed_gbs": 87.02,
+        "perf_rd_gbs": 0.1120364473529465,
+        "perf_wr_gbs": 86.65652712092913,
+        "perf_gbs": 86.76856356828208,
+        "pair": [
+          9,
+          11
+        ],
+        "same_clock_pair": false
+      },
+      {
+        "threads": 2,
+        "cores": "10,11",
+        "timed_gbs": 84.81,
+        "perf_rd_gbs": 0.11742690364522555,
+        "perf_wr_gbs": 84.31425660865446,
+        "perf_gbs": 84.43168351229968,
+        "pair": [
+          10,
+          11
+        ],
+        "same_clock_pair": true
+      }
+    ],
+    "group {12-13}": [
+      {
+        "threads": 2,
+        "cores": "12,13",
+        "timed_gbs": 84.27,
+        "perf_rd_gbs": 0.123339175605866,
+        "perf_wr_gbs": 83.93313722261189,
+        "perf_gbs": 84.05647639821775,
+        "pair": [
+          12,
+          13
+        ],
+        "same_clock_pair": true
+      }
+    ]
+  },
+  "reference": [
+    {
+      "threads": 2,
+      "cores": "0,4",
+      "timed_gbs": 95.6,
+      "perf_rd_gbs": 0.09610536867458512,
+      "perf_wr_gbs": 95.21549508407404,
+      "perf_gbs": 95.31160045274862,
+      "pair": [
+        0,
+        4
+      ]
+    },
+    {
+      "threads": 2,
+      "cores": "4,8",
+      "timed_gbs": 95.97,
+      "perf_rd_gbs": 0.08531472595969118,
+      "perf_wr_gbs": 95.47998218642775,
+      "perf_gbs": 95.56529691238744,
+      "pair": [
+        4,
+        8
+      ]
+    },
+    {
+      "threads": 2,
+      "cores": "8,12",
+      "timed_gbs": 95.92,
+      "perf_rd_gbs": 0.16202174090982052,
+      "perf_wr_gbs": 95.53219670404461,
+      "perf_gbs": 95.69421844495443,
+      "pair": [
+        8,
+        12
+      ]
+    }
+  ]
+}
